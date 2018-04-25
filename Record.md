@@ -10,7 +10,7 @@
 （2）《Methods for Interpreting and Understanding Deep Neural Networks》
 最终输出对图片像素值的导数（的平方）
 
-
+                                                                                                                                          
 2018.04.24
 
 文字检测
@@ -31,7 +31,7 @@
 
 使用FCN回归每个像素点是文字的score，以及对应的框的位置，再把框合并。
 
-
+                                                                                                                                          
 2018.04.25
 
 行文字识别
@@ -44,7 +44,15 @@
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/1.png)
 
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/2.png)
+
 （4）把整行图片传入CNN，得到高固定、宽任意、通道数固定的特征，以宽度作为时间生成序列，传入RNN，再把RNN的输出结果使用CTC合并，也就是所谓的“CRNN”；（《An End-to-End Trainable Neural Network for Image-based Sequence Recognition and Its Application to Scene Text Recognition》）
 
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/3.png)
+
 （5）把整行图片传入CNN，得到高固定、宽任意、通道数固定的特征，以宽度作为时间生成序列，传入RNN，在RNN中使用Attention机制代替CTC，得到最终识别结果。（《Recursive Recurrent Nets with Attention Modeling for OCR in the Wild》，《Robust Scene Text Recognition with Automatic Rectification》）
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/4.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/5.png)
 

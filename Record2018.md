@@ -87,4 +87,4 @@ Skip-gram
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/8.png)
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/9.png)
 
-
+两种方法都不考虑窗口内words的顺序，都是为了训练得到words的向量表示。

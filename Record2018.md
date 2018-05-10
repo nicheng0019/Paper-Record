@@ -10,7 +10,8 @@
 （2）《Methods for Interpreting and Understanding Deep Neural Networks》
 最终输出对图片像素值的导数（的平方）
 
-                                                                                                                                          
+                                                                                                                                         
+
 2018.04.24
 
 文字检测
@@ -31,7 +32,8 @@
 
 使用FCN回归每个像素点是文字的score，以及对应的框的位置，再把框合并。
 
-                                                                                                                                          
+                                                                                                                                         
+
 2018.04.25
 
 行文字识别
@@ -57,4 +59,5 @@
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/5.png)
 
 补充：另一篇使用attention机制的文章是《Attention-based Extraction of Structured Information from Street View Imagery》，与（5）中两篇文章的不同之处是：（5）中文章使用的网络结构是 CNN-RNN(encoder) + Attention-RNN(decoder)，而这篇文章的网络结构是 CNN(encoder) + Attention-RNN(decoder)。原因是：（5）中的文章是检测一行文字，图片长度是变化的，需要先使用RNN转成固定长度的特征，而这篇文章检测的路牌是多行文字，图片尺寸固定，所以可以直接把最后一个卷积层作为特征。
+
 

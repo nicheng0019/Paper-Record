@@ -18,7 +18,7 @@
 
 （1）《Multi-Oriented Text Detection with Fully Convolutional Networks》
 
-先用FCN 得到候选的文字区域，再用传统方法分割出一行行文字和文字方向，再用FCN得到每个字符的中心，再进一步分类文字和非文字；
+先用FCN得到候选的文字区域，再用传统方法分割出一行行文字和文字方向，再用FCN得到每个字符的中心，再进一步分类文字和非文字；
 
 （2）《Scene Text Detection via Holistic, Multi-Channel Prediction》
 
@@ -60,4 +60,21 @@
 
 补充：另一篇使用attention机制的文章是《Attention-based Extraction of Structured Information from Street View Imagery》，与（5）中两篇文章的不同之处是：（5）中文章使用的网络结构是 CNN-RNN(encoder) + Attention-RNN(decoder)，而这篇文章的网络结构是 CNN(encoder) + Attention-RNN(decoder)。原因是：（5）中的文章是检测一行文字，图片长度是变化的，需要先使用RNN转成固定长度的特征，而这篇文章检测的路牌是多行文字，图片尺寸固定，所以可以直接把最后一个卷积层作为特征。
 
+
+
+2018.05.10
+
+word2vector
+
+（1）《A Neural Probabilistic Language Model》
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/6.png)
+
+g可以是前向神经网络或者循环神经网络，C是学到的distributed representation；
+
+（2）《Efficient Estimation of Word Representations in Vector Space》、《Linguistic Regularities in Continuous Space Word Representations》、《Exploiting Similarities among Languages for Machine Translation》、《Distributed Representations of Words and Phrases and their Compositionality》
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/7.png)
+
+Continuous Bag-of-Words (CBOW)
 

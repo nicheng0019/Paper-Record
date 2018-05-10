@@ -70,11 +70,21 @@ word2vector
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/6.png)
 
-g可以是前向神经网络或者循环神经网络，C是学到的distributed representation；
+训练的文本作为输入，在文本上用back-off n-gram模型得到的概率作为输出，训练模型参数，g可以是前向神经网络或者循环神经网络，C是学到的distributed representation；
 
 （2）《Efficient Estimation of Word Representations in Vector Space》、《Linguistic Regularities in Continuous Space Word Representations》、《Exploiting Similarities among Languages for Machine Translation》、《Distributed Representations of Words and Phrases and their Compositionality》
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/7.png)
 
+两个模型都各有一个input representation u和一个output representation v，
+
 Continuous Bag-of-Words (CBOW)
+
+计算窗口内的所有words（除了当前位置i）的u的和的平均值，再与每个v做内积得到对应每个word的输出，再用softmax计算概率；
+
+Skip-gram
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/8.png)
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/9.png)
+
 

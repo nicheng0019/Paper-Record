@@ -76,7 +76,7 @@ word2vector
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/7.png)
 
-两个模型都各有一个input representation u和一个output representation v，
+两个模型都各有一个input representation u和一个output representation v，w(t)是1-of-V coding（V是字典里words的个数），
 
 Continuous Bag-of-Words (CBOW)
 

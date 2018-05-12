@@ -94,3 +94,18 @@ Skip-gram
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/10.png)
 
 使用RNN结构，隐藏状态保存句子历史信息，u是学到的word representations。
+
+（4）《Linguistic Regularities in Sparse and Explicit Word Representations》
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/11.png)
+
+分别使用explicit vector representations（见上图）和neural embeddings两种words representation方法，分别用3COSADD和PAIRDIRECTION作为优化目标函数，训练模型。
+
+3COSADD
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/12.png)
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/13.png)
+
+PAIRDIRECTION
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/14.png)

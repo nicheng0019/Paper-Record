@@ -72,7 +72,7 @@ word2vector
 
 训练的文本作为输入，在文本上用back-off n-gram模型得到的概率作为输出，训练模型参数，g可以是前向神经网络或者循环神经网络，C是学到的distributed representation；
 
-（2）《Efficient Estimation of Word Representations in Vector Space》、《Linguistic Regularities in Continuous Space Word Representations》、《Exploiting Similarities among Languages for Machine Translation》、《Distributed Representations of Words and Phrases and their Compositionality》
+（2）《Efficient Estimation of Word Representations in Vector Space》、《Exploiting Similarities among Languages for Machine Translation》、《Distributed Representations of Words and Phrases and their Compositionality》
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/7.png)
 
@@ -88,3 +88,9 @@ Skip-gram
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/9.png)
 
 两种方法都不考虑窗口内words的顺序，都是为了训练得到words的向量表示。
+
+（3）《Linguistic Regularities in Continuous Space Word Representations》
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/10.png)
+
+使用RNN结构，隐藏状态保存句子历史信息，u是学到的word representations。

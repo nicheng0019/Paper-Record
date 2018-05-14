@@ -109,3 +109,11 @@ Skip-gram
 PAIRDIRECTION
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/14.png)
+
+（5）《Learning word embeddings efficiently with noise-contrastive estimation》（vLBL and ivLBL）
+
+待补充
+
+（6）《GloVe: Global Vectors for Word Representation》 （GloVe）
+
+待补充

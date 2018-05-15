@@ -143,19 +143,23 @@ text classification
 
 文字检测（续一）
 
-（1）《Detecting Oriented Text in Natural Images by Linking Segments》
+（1）《Arbitrary-Oriented Scene Text Detection via Rotation Proposals》
 
 待补充
 
-（2）《Deep Direct Regression for Multi-Oriented Scene Text Detection》
+（2）《Detecting Oriented Text in Natural Images by Linking Segments》
 
 待补充
 
-（3）《Fused Text Segmentation Networks for Multi-oriented Scene Text Detection》
+（3）《Deep Direct Regression for Multi-Oriented Scene Text Detection》
 
 待补充
 
-（4）《IncepText: A New Inception-Text Module with Deformable PSROI Pooling for Multi-Oriented Scene Text Detection》
+（4）《Fused Text Segmentation Networks for Multi-oriented Scene Text Detection》
+
+待补充
+
+（5）《IncepText: A New Inception-Text Module with Deformable PSROI Pooling for Multi-Oriented Scene Text Detection》
 
 待补充
 

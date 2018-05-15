@@ -135,4 +135,28 @@ text classification
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/17.png)
 
-监督学习，使用文本里words的vectors的均值，使用更深的feed-forward network，及使用dropout（训练时随机漏掉文本中的某些word）；
+监督学习，使用文本里words的vectors的均值，使用更深的feed-forward network，及使用dropout（训练时随机漏掉文本中的某些word）。
+
+
+
+2018.05.15
+
+文字检测（续一）
+
+（1）《Detecting Oriented Text in Natural Images by Linking Segments》
+
+待补充
+
+（2）《Deep Direct Regression for Multi-Oriented Scene Text Detection》
+
+待补充
+
+（3）《Fused Text Segmentation Networks for Multi-oriented Scene Text Detection》
+
+待补充
+
+（4）《IncepText: A New Inception-Text Module with Deformable PSROI Pooling for Multi-Oriented Scene Text Detection》
+
+待补充
+
+

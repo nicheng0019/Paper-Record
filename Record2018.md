@@ -184,5 +184,36 @@ Faster RCNN：Fast RCNN最耗时的操作为selective search，于是提出RPN�
 注：Fast RCNN中的ROIpool和SPPnet的不同：SPPnet pool多个尺度来整合成同样大小，但失去了对应的空间位置；ROIpool把特征map分成H * W（H、W为归一化后的宽高）个subwindow，每个subwindow里做pool。
 
 
+2018.06.04
 
+SFace脉络：
 
+《Multi-view Face Detection Using Deep Convolutional Neural Networks》
+
+使用修改过的AlexNet，全卷积网络，每个octave缩放3次，最后一层生成1张heatmap，根据门限值判断哪些位置是人脸，可以检测不同角度的人脸，但无法给出具体角度。
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/18.png)
+
+《DenseBox: Unifying Landmark Localization with End to End Object Detection》
+
+全卷积网络，输出heatmap和左上\右下两个点的相对位置，类似于EAST算法，使用多个尺寸测试，可以检测关键点。
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/19.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/20.png)
+
+《UnitBox: An Advanced Object Detection Network》
+
+使用DenseBox类似的结构，把box回归的L2 loss改成IOU loss。
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/21.png)
+
+《SFace: An Efficient Network for Face Detection in Large Scale Variations》
+
+整合anchor-based和anchor-free两种检测方法，都使用IOU loss，再把两种检测方法的结果融合。
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/22.png)
+
+注：《Convolutional Face Finder: A Neural Architecture for Fast and Robust Face Detection》一篇2004年发表的论文，提出用CNN检测人脸。
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/23.png)

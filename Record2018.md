@@ -217,3 +217,19 @@ SFace脉络：
 注：《Convolutional Face Finder: A Neural Architecture for Fast and Robust Face Detection》一篇2004年发表的论文，提出用CNN检测人脸。
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/23.png)
+
+2018.06.06
+
+Highway Network 和 ResNet
+
+《Deep Residual Learning for Image Recognition》
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/24.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/25.png)
+
+《Training Very Deep Networks》
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/26.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/27.png)

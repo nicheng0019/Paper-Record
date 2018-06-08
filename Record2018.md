@@ -30,7 +30,7 @@
 
 （4）《EAST: An Efficient and Accurate Scene Text Detector》
 
-使用FCN回归每个像素点是文字的score，以及对应的框的位置，再把框合并。
+使用FCN回归每个像素点是文字的score，以及对应的框的位置，再把框合并，对较长文字的检测效果不太好，两端会有漏掉的部分，可能时因为网络的Receptive Field太小。
 
                                                                                                                                          
 
@@ -218,8 +218,6 @@ SFace脉络：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/23.png)
 
-                   
-
 
 2018.06.06
 
@@ -236,4 +234,47 @@ Highway Network 和 ResNet
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/26.png)
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/27.png)
+
+
+2018.06.08
+
+Style Transfer
+
+《A Neural Algorithm of Artistic Style》、《Image Style Transfer Using Convolutional Neural Networks》
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/28.png)
+
+Content Representation Loss:
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/29.png)
+
+Gram matrix:
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/30.png)
+
+Style Representation Loss:
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/31.png)
+
+Total Loss:
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/32.png)
+
+《preserving color in neural artisic style transfer》
+
+保持颜色的风格变换的两种方法：
+
+1、Color histogram matching
+
+变换style image的颜色，使变换后的style image的颜色的均值和协方差与content image相等，文章中使用线性变换，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/33.png)
+
+具体使用的是Image Analogies color transfer和Cholesky transfer，《Colour mapping: A review of recent methods, extensions and applications》中有更多变换方法。
+
+2、Luminance-only transfer
+
+使用YIQ颜色空间，只在亮度Y通道上做风格变换，如果style image和content image的亮度通道的直方图不一致，可以先修改style image的亮度通道使得一致，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/34.png)
 

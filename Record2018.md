@@ -278,3 +278,98 @@ Total Loss:
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/34.png)
 
+《Universal Style Transfer via Feature Transforms》
+
+之前的文章用Gram矩阵来表达风格的特征,这篇文章用signal whitening and coloring transforms (WCTs)来处理content features和style features,
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/35.png)
+
+1）训练Reconstruction decoder：
+
+使用VGG-19来encode特征,再训练与VGG-19对称的decoder来重建图片,
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/36.png)
+
+2)	用encoder提取content image和style image的特征：
+
+Whitening transform: ccontent feature先减去均值,再做线性变换,
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/37.png)
+
+Coloring transform：style feature先减去均值,再做coloring transform.再对上一步得到的特征做线性变换,
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/38.png)
+
+再WCT之后,
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/39.png)
+
+输入到decoder得到最终风格变换后的图像。
+
+
+
+
+2018.07.16
+
+Optical Flow
+
+《FlowNet: Learning Optical Flow with Convolutional Networks》
+
+1、FlowNetSimple：
+
+把两张图片stack到一起,在传入一个CNN里,输出optical flow,
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/40.png)
+
+2、FlowNetCorr：
+
+两张图片分别提取特,在某一层feature maps上计算相关性,
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/41.png)
+
+为了减小计算量,在某一个位置上,只对位移大小为d的邻域计算相关性,即邻域大小D:=2d+1，
+
+Refinement的网络结构为:
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/42.png)
+
+把network收缩部分的特征和deconv得到的特征以及前一个flow map(如果存在的话) upsample得到的特征concatenate到一起,进行deconv得到下一层的特征,进行conv得到本层的flow map。
+
+《FlowNet 2.0: Evolution of Optical Flow Estimation with Deep Networks》
+
+stack 《FlowNet》里的网络结构：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/43.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/44.png)
+
+
+
+
+Face Alignment
+
+《Face Alignment by Explicit Shape Regression》
+
+1、选择初始Shape,train的时候,从训练集的所有groundtruth中选择,test的时候,从训练集的groundtruth中挑选有代表性的作为标准Shape;
+
+2、two levels boosted regressiors,internal-level regression R和由所有R组成的external-level regression;
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/45.png)
+
+3、internal-level regression R,由K个fern组成,每个fern从400个特征里选择5个作为特征;
+
+4、Shape Indexed (Image) Features,两个像素点的插值作为特征,而且两个像素点的坐标使用相对于距离最近的关键点的相对坐标,选取特征时,根据regression target和特征之间的correlation来选取5个特征。
+
+《Deep Convolutional Network Cascade for Facial Point Detection》
+
+Cascaded Convolutional Network,不断精确关键点的位置,level1回归整张脸\眼睛+鼻子\鼻子+嘴的位置,level2-leveln对每个关键点在前一个level回归的位置上逐步选取更小的邻域.作为下一个level的输入;
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/46.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/47.png)
+
+《Facial Landmark Detection by Deep Multi-task Learning》
+
+把关键点检测和pose, gender, wear glasses, smiling结合起来作多任务学习;
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/48.png)

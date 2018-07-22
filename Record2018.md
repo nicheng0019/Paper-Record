@@ -280,27 +280,27 @@ Total Loss:
 
 《Universal Style Transfer via Feature Transforms》
 
-之前的文章用Gram矩阵来表达风格的特征,这篇文章用signal whitening and coloring transforms (WCTs)来处理content features和style features,
+之前的文章用Gram矩阵来表达风格的特征，这篇文章用signal whitening and coloring transforms (WCTs)来处理content features和style features，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/35.png)
 
 1）训练Reconstruction decoder：
 
-使用VGG-19来encode特征,再训练与VGG-19对称的decoder来重建图片,
+使用VGG-19来encode特征，再训练与VGG-19对称的decoder来重建图片，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/36.png)
 
 2)	用encoder提取content image和style image的特征：
 
-Whitening transform: ccontent feature先减去均值,再做线性变换,
+Whitening transform: ccontent feature先减去均值,再做线性变换，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/37.png)
 
-Coloring transform：style feature先减去均值,再做coloring transform.再对上一步得到的特征做线性变换,
+Coloring transform：style feature先减去均值，再做coloring transform，再对上一步得到的特征做线性变换，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/38.png)
 
-再WCT之后,
+再WCT之后，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/39.png)
 
@@ -317,7 +317,7 @@ Optical Flow
 
 1、FlowNetSimple：
 
-把两张图片stack到一起,在传入一个CNN里,输出optical flow,
+把两张图片stack到一起,在传入一个CNN里，输出optical flow；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/40.png)
 
@@ -327,13 +327,13 @@ Optical Flow
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/41.png)
 
-为了减小计算量,在某一个位置上,只对位移大小为d的邻域计算相关性,即邻域大小D:=2d+1，
+为了减小计算量，在某一个位置上，只对位移大小为d的邻域计算相关性,即邻域大小D:=2d+1，
 
-Refinement的网络结构为:
+Refinement的网络结构为：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/42.png)
 
-把network收缩部分的特征和deconv得到的特征以及前一个flow map(如果存在的话) upsample得到的特征concatenate到一起,进行deconv得到下一层的特征,进行conv得到本层的flow map。
+把network收缩部分的特征和deconv得到的特征以及前一个flow map(如果存在的话)upsample得到的特征concatenate到一起，进行deconv得到下一层的特征，进行conv得到本层的flow map。
 
 《FlowNet 2.0: Evolution of Optical Flow Estimation with Deep Networks》
 
@@ -350,19 +350,19 @@ Face Alignment
 
 《Face Alignment by Explicit Shape Regression》
 
-1、选择初始Shape,train的时候,从训练集的所有groundtruth中选择,test的时候,从训练集的groundtruth中挑选有代表性的作为标准Shape;
+1、选择初始Shape,train的时候，从训练集的所有groundtruth中选择，test的时候，从训练集的groundtruth中挑选有代表性的作为标准Shape；
 
-2、two levels boosted regressiors,internal-level regression R和由所有R组成的external-level regression;
+2、two levels boosted regressiors，internal-level regression R和由所有R组成的external-level regression；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/45.png)
 
-3、internal-level regression R,由K个fern组成,每个fern从400个特征里选择5个作为特征;
+3、internal-level regression R,由K个fern组成,每个fern从400个特征里选择5个作为特征；
 
-4、Shape Indexed (Image) Features,两个像素点的插值作为特征,而且两个像素点的坐标使用相对于距离最近的关键点的相对坐标,选取特征时,根据regression target和特征之间的correlation来选取5个特征。
+4、Shape Indexed (Image) Features，两个像素点的插值作为特征，而且两个像素点的坐标使用相对于距离最近的关键点的相对坐标，选取特征时，根据regression target和特征之间的correlation来选取5个特征。
 
 《Deep Convolutional Network Cascade for Facial Point Detection》
 
-Cascaded Convolutional Network,不断精确关键点的位置,level1回归整张脸\眼睛+鼻子\鼻子+嘴的位置,level2-leveln对每个关键点在前一个level回归的位置上逐步选取更小的邻域.作为下一个level的输入;
+Cascaded Convolutional Network，不断精确关键点的位置，level1回归整张脸、眼睛+鼻子、鼻子+嘴的位置，level2-leveln对每个关键点在前一个level回归的位置上逐步选取更小的邻域作为下一个level的输入;
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/46.png)
 
@@ -373,3 +373,67 @@ Cascaded Convolutional Network,不断精确关键点的位置,level1回归整张
 把关键点检测和pose, gender, wear glasses, smiling结合起来作多任务学习;
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/48.png)
+
+
+
+
+2018.07.22
+
+SeetaFaceEngine
+
+SeetaFace Detection，《Funnel-Structured Cascade for Multi-View Face Detection with Alignment-Awareness》：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/49.png)
+
+1、先用LAB特征+boosted cascade classifiers粗略检测人脸，把确定不是人脸的区域排除掉，其中，对于不同视角的人脸，分别训练一个分类器；
+
+2、SURF特征+粗略的MLP分类器，从多个LAB分类器输出的窗口输入到一个MLP cascade classifier，所以有若干个MLP cascade classifiers，其中一个MLP cascade classifier是多个MLP级联起来，每个MLP使用的特征的个数和网络的size逐渐增加，使用group sparse方法挑选每个stage使用的SURF特征，只有通过上一个MLP才会输入到下一个MLP继续判断；
+
+3、shape-indexed特征+精细的MLP分类器，只有一个MLP cascade classifier，提取关键点位置的SIFT特征输入到MLP，输出人脸判断和关键点位置的调整，通过人脸判断的再传入到下一个MLP。
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/50.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/51.png)
+
+附：
+
+《Locally Assembled Binary (LAB) Feature with Feature-centric Cascade for Fast and Accurate Face Detection》
+
+Locally Assembled Binary (LAB) Haar feature相当于二值化的HAAR特征,跟LBP的区别是:LBP是两个像素点的差值的二值化，LAB是两个区域的像素点的累加值的差的二值化,
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/52.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/53.png)
+
+Feature-centric cascade: 对于一个窗口提取到的多维特征，不是一次全部输入到一个分类器里，而是分stage逐步增加特征的维度，直到最后一个stage才是整个维度的特征,以此来减少计算量。
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/54.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/55.png)
+
+
+SeetaFace Alignment，《Coarse-to-Fine Auto-Encoder Networks (CFAN) for Real-Time Face Alignment》：
+
+先用glabol SAN(Stacked Auto-encoder Networks)以原图片作为特征回归初始关键点位置，再用local SAN调整关键点位置，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/56.png)
+
+1、global SAN，用图片原像素值作为特征，训练自编码网络，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/57.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/58.png)
+
+其中，每一层的权重的初始值通过预训练逐层得到，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/59.png)
+
+2、local SANs，使用Shape-indexed特征(例如SIFT)作为输入，得到关键点的调整值，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/60.png)
+
+每个local SAN使用的特征的分辨率逐渐增加。
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/61.png)
+
+SeetaFace Identification，（待补充）：

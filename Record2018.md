@@ -190,7 +190,7 @@ SFace脉络：
 
 《Multi-view Face Detection Using Deep Convolutional Neural Networks》
 
-使用修改过的AlexNet，全卷积网络，每个octave缩放3次，最后一层生成1张heatmap，根据门限值判断哪些位置是人脸，可以检测不同角度的人脸，但无法给出具体角度。
+使用修改过的AlexNet，把FC层改为卷积层，图片大小不限制，图片最小尺寸大于227，最大放大5倍，每个octave缩放3次（octave：八度音，音乐上相邻的八度音的频率比为1：2，所以图像上相邻的octave的尺寸比为1：2），最后一层生成1张heatmap，AlexNet的输入图片的尺寸为227x227，所以heatmap上一个点对应原图像上一个227x227的区域，stride为32，根据heatmap上大于门限值的点得到对应的原图片上区域为人脸，再使用NMS方法过滤得到的区域，可以检测不同角度的人脸，但无法给出具体角度。
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/18.png)
 

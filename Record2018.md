@@ -190,7 +190,9 @@ SFace脉络：
 
 《Multi-view Face Detection Using Deep Convolutional Neural Networks》
 
-使用修改过的AlexNet，把FC层改为卷积层，图片大小不限制，图片最小尺寸大于227，最大放大5倍，每个octave缩放3次（octave：八度音，音乐上相邻的八度音的频率比为1：2，所以图像上相邻的octave的尺寸比为1：2），最后一层生成1张heatmap，AlexNet的输入图片的尺寸为227x227，所以heatmap上一个点对应原图像上一个227x227的区域，stride为32，根据heatmap上大于门限值的点得到对应的原图片上区域为人脸，再使用NMS方法过滤得到的区域，可以检测不同角度的人脸，但无法给出具体角度。
+使用修改过的AlexNet，把FC层改为卷积层，图片大小不限制，图片最小尺寸大于227，最大放大5倍，每个octave缩放3次（octave：八度音，音乐上相邻的八度音的频率比为1：2，所以图像上相邻的octave的尺寸比为1：2），最后一层生成1张heatmap，AlexNet的输入图片的尺寸为227x227，所以heatmap上一个点对应原图像上一个227x227的区域，stride为32，根据heatmap上大于门限值的点得到对应的原图片上区域为人脸，再使用NMS方法过滤得到的区域，可以检测不同角度的人脸，但无法给出具体角度,
+
+两种NMS方法：（1）NMS-max，即传统的NMS，两个boxes的IOU大于门限值，则删掉score小的box，（2）NMS-avg，根据IOU把boxes聚类，每个cluster里把score低的boxes删掉，取剩余的boxes的均值作为最终box的值，cluster里最大的score作为最终的score，EAST里使用的合并文字检测框的方法和这个比较像。
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/18.png)
 

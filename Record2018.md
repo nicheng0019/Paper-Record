@@ -370,6 +370,8 @@ Cascaded Convolutional Network，不断精确关键点的位置，level1回归�
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/47.png)
 
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/67.png)
+
 《Facial Landmark Detection by Deep Multi-task Learning》
 
 把关键点检测和pose, gender, wear glasses, smiling结合起来作多任务学习;
@@ -438,4 +440,31 @@ SeetaFace Alignment，《Coarse-to-Fine Auto-Encoder Networks (CFAN) for Real-Ti
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/61.png)
 
-SeetaFace Identification，（待补充）：
+SeetaFace Identification，《VIPLFaceNet: An Open Source Deep Face Recognition SDK》：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/62.png)
+
+使用FC2作为特征判断相似度。
+
+
+SeetaFaceEngine2
+
+Detection(无)
+
+
+Alignment， 《A Fully End-to-End Cascaded CNN for Facial Landmark Detection》
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/63.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/64.png)
+
+H为整个network，S0是初始shape，可以使用mean shape，也可以通过cnn回归得到，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/65.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/66.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/68.png)
+
+
+Identification(无)

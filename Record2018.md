@@ -348,17 +348,19 @@ stack 《FlowNet》里的网络结构：
 
 
 
-Face Alignment
+Face Alignment（一）
 
 《Face Alignment by Explicit Shape Regression》
 
-1、选择初始Shape,train的时候，从训练集的所有groundtruth中选择，test的时候，从训练集的groundtruth中挑选有代表性的作为标准Shape；
+1、选择初始Shape，train的时候，从训练集的所有groundtruth中选择，test的时候，从训练集的groundtruth中挑选有代表性的作为标准Shape；
 
 2、two levels boosted regressiors，internal-level regression R和由所有R组成的external-level regression；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/45.png)
 
-3、internal-level regression R,由K个fern组成,每个fern从400个特征里选择5个作为特征；
+选择一个初始Shape，每一个Stage的R去拟合当前的Shape和groundtruth的偏差转换到Mean Shape空间的值(通过normalized shape操作)，把拟合的结果再转换到Shape空间；分成多个Stage比用一个Stage效果好，因为每个Stage使用的Shape Indexed Feature是在上一个Stage得到的Shape做相对的位置偏移得到的，随着Stages输出的Shape越来越准确，下一个Stage使用的特征也越来越准确；
+
+3、internal-level regression R，由K个fern组成，每个fern从400特征的差值(160000个特征)里选择5个作为特征(包括5个thresholds)，输出为32(2的5次方)个bin，每一个bin里的输出是整个Shape的编译；因为每一个fern的每一个bin都是训练集的groundtruth和初始Shape的加权之后的结果，所以每一个R的输出都是groundtruth和初始Shape的加权和，保证了最终拟合的Shape在训练集的Shapes组成的线性空间里(因为normalized shape操作只有scale和rotation)；
 
 4、Shape Indexed (Image) Features，两个像素点的插值作为特征，而且两个像素点的坐标使用相对于距离最近的关键点的相对坐标，选取特征时，根据regression target和特征之间的correlation来选取5个特征。
 
@@ -473,3 +475,50 @@ H为整个network，S0是初始shape，可以使用mean shape，也可以通过c
 
 
 Identification(无)
+
+
+
+2018.08.07
+
+Face Alignment（二）
+
+
+《Face Alignment at 3000 FPS via Regressing Local Binary Features》
+
+(1)	对于每一个keypoint，在每个Stage里,先随机选取500个Shape-Indexed像素差值的二值化作为特征，训练random forest，把forest里所有的trees的leaves节点组成一个索引向量；
+
+(2)	把所有keypoints的索引向量链接起来作为特征，训练线性回归得到每个Stage的Shape的变化，因为线性回归的权重是所有训练集的Shapes的线性组合，所以最终拟合的Shape就是初始Shape和所有训练集的Shapes的线性组合，保证了Shape的约束。
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/69.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/70.png)
+
+《One Millisecond Face Alignment with an Ensemble of Regression Trees》
+
+把ESR里的boost fern改成GBDT。
+
+
+ 图片模糊模型：
+ 
+《Digital Image Restoration》
+
+Image degradation system
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/71.png)
+
+(1)	Motion Blur：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/72.png)
+
+(2)	Atmospheric Turbulence Blur：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/73.png)
+
+(3)	Uniform Out-of-Focus Blur：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/74.png)
+
+(4)	Uniform 2-D Blur：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/75.png)
+

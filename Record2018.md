@@ -523,3 +523,54 @@ Image degradation system
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/75.png)
 
+
+
+
+2018.08.23
+
+Face Alignment（三）
+
+《Deep Recurrent Regression for Facial Landmark Detection》
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/76.png)
+
+1、先使用conv-deconv神经网络输出特征点的heat map，每个特征点对应一个channel，从训练集合的样本中使用k-mean方法选出N个shapes作为候选，根据heat map输出的特征点位置找出最接近的候选shape作为初始shape；
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/77.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/78.png)
+
+2、提取Deep Shape-indexed Features，在1中的网络的最后一个feature map上,以每个关键点为中心，在b*b窗口上上做max pooling，concentrate所有channels的结果作为特征；
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/79.png)
+
+3、以Deep Shape-indexed Features为输入训练LSTM，回归shape的increment，在LSTM的每一个step,以调整后的shape重新提取Shape-indexed Feature作为输入。
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/80.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/81.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/82.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/83.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/84.png)
+
+
+
+《Approaching human level facial landmark localization by deep learning》
+
+1、First Level CNN：
+
+用整张人脸回归出所有landmark的初始位置，根据初始位置对图片做相似变换,变换到标准shape；
+
+2、Second Level CNN：
+
+每个landmark训练一个CNN，以landmark的局部区域作为输入，输出这个landmark临近的K个landmark的位置，最终每个lankmark的位置为所有CNN输出的平均值。
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/85.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/86.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/87.png)
+

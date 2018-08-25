@@ -4,10 +4,10 @@
 
 判断图片像素值对最终分类结果的影响的两种方法：
 
-（1）《Learning Deep Features for Discriminative Localization》
+1、《Learning Deep Features for Discriminative Localization》
 生成特征权重图CAM（Class Activation Mapping）
 
-（2）《Methods for Interpreting and Understanding Deep Neural Networks》
+2、《Methods for Interpreting and Understanding Deep Neural Networks》
 最终输出对图片像素值的导数（的平方）
 
                                                                                                                                          
@@ -16,19 +16,19 @@
 
 文字检测
 
-（1）《Multi-Oriented Text Detection with Fully Convolutional Networks》
+《Multi-Oriented Text Detection with Fully Convolutional Networks》
 
 先用FCN得到候选的文字区域，再用传统方法分割出一行行文字和文字方向，再用FCN得到每个字符的中心，再进一步分类文字和非文字；
 
-（2）《Scene Text Detection via Holistic, Multi-Channel Prediction》
+《Scene Text Detection via Holistic, Multi-Channel Prediction》
 
 使用FCN生成三张map，一张分割行文字，一张分割字符，一张回归每个像素点对应的文字方向；
 
-（3）《Deep Matching Prior Network: Toward Tighter Multi-oriented Text Detection》
+《Deep Matching Prior Network: Toward Tighter Multi-oriented Text Detection》
 
 使用CNN+带方向的滑动窗口来回归文字区域，使用Monte-Carlo方法来计算不规则四边形的重合面积；
 
-（4）《EAST: An Efficient and Accurate Scene Text Detector》
+《EAST: An Efficient and Accurate Scene Text Detector》
 
 使用FCN回归每个像素点是文字的score，以及对应的框的位置，再把框合并，对较长文字的检测效果不太好，两端会有漏掉的部分，可能时因为网络的Receptive Field太小。
 
@@ -38,21 +38,21 @@
 
 行文字识别
 
-（1）最简单的思路：滑动窗口，每个窗口使用CNN分类，把得到的结果序列处理一下得到最终识别结果。缺点：处理分类结果序列时，何时该合并相邻的同样的分类结果，何时不合并很难判断；
+1、最简单的思路：滑动窗口，每个窗口使用CNN分类，把得到的结果序列处理一下得到最终识别结果。缺点：处理分类结果序列时，何时该合并相邻的同样的分类结果，何时不合并很难判断；
 
-（2）滑动窗口，每个窗口使用CNN分类，把得到的结果序列使用CTC来得到最终结果，解决（1）的问题。缺点：每个窗口只有窗口内的像素值信息，缺少上下文联系；
+2、滑动窗口，每个窗口使用CNN分类，把得到的结果序列使用CTC来得到最终结果，解决（1）的问题。缺点：每个窗口只有窗口内的像素值信息，缺少上下文联系；
 
-（3）滑动窗口，每个窗口使用CNN分类，把得到的结果序列再传入RNN（比如两层的双向LSTM），再把RNN的输出结果使用CTC合并。缺点：滑动窗口会有重叠，重叠部分要做同样的卷积计算两次；（《Reading Scene Text in Deep Convolutional Sequences》）
+3、滑动窗口，每个窗口使用CNN分类，把得到的结果序列再传入RNN（比如两层的双向LSTM），再把RNN的输出结果使用CTC合并。缺点：滑动窗口会有重叠，重叠部分要做同样的卷积计算两次；（《Reading Scene Text in Deep Convolutional Sequences》）
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/1.png)
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/2.png)
 
-（4）把整行图片传入CNN，得到高固定、宽任意、通道数固定的特征，以宽度作为时间生成序列，传入RNN，再把RNN的输出结果使用CTC合并，也就是所谓的“CRNN”；（《An End-to-End Trainable Neural Network for Image-based Sequence Recognition and Its Application to Scene Text Recognition》）
+4、把整行图片传入CNN，得到高固定、宽任意、通道数固定的特征，以宽度作为时间生成序列，传入RNN，再把RNN的输出结果使用CTC合并，也就是所谓的“CRNN”；（《An End-to-End Trainable Neural Network for Image-based Sequence Recognition and Its Application to Scene Text Recognition》）
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/3.png)
 
-（5）把整行图片传入CNN，得到高固定、宽任意、通道数固定的特征，以宽度作为时间生成序列，传入RNN，在RNN中使用Attention机制代替CTC，得到最终识别结果。（《Recursive Recurrent Nets with Attention Modeling for OCR in the Wild》，《Robust Scene Text Recognition with Automatic Rectification》）
+5、把整行图片传入CNN，得到高固定、宽任意、通道数固定的特征，以宽度作为时间生成序列，传入RNN，在RNN中使用Attention机制代替CTC，得到最终识别结果。（《Recursive Recurrent Nets with Attention Modeling for OCR in the Wild》，《Robust Scene Text Recognition with Automatic Rectification》）
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/4.png)
 
@@ -66,13 +66,13 @@
 
 word2vector
 
-（1）《A Neural Probabilistic Language Model》
+《A Neural Probabilistic Language Model》
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/6.png)
 
 训练的文本作为输入，在文本上用back-off n-gram模型得到的概率作为输出，训练模型参数，g可以是前向神经网络或者循环神经网络，C是学到的distributed representation；
 
-（2）《Efficient Estimation of Word Representations in Vector Space》、《Exploiting Similarities among Languages for Machine Translation》、《Distributed Representations of Words and Phrases and their Compositionality》
+《Efficient Estimation of Word Representations in Vector Space》、《Exploiting Similarities among Languages for Machine Translation》、《Distributed Representations of Words and Phrases and their Compositionality》
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/7.png)
 
@@ -89,13 +89,13 @@ Skip-gram
 
 两种方法都不考虑窗口内words的顺序，都是为了训练得到words的向量表示。
 
-（3）《Linguistic Regularities in Continuous Space Word Representations》
+《Linguistic Regularities in Continuous Space Word Representations》
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/10.png)
 
 使用RNN结构，隐藏状态保存句子历史信息，u是学到的word representations。
 
-（4）《Linguistic Regularities in Sparse and Explicit Word Representations》
+《Linguistic Regularities in Sparse and Explicit Word Representations》
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/11.png)
 
@@ -110,28 +110,30 @@ PAIRDIRECTION
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/14.png)
 
-（5）《Learning word embeddings efficiently with noise-contrastive estimation》（vLBL and ivLBL）
+《Learning word embeddings efficiently with noise-contrastive estimation》（vLBL and ivLBL）
 
 待补充
 
-（6）《GloVe: Global Vectors for Word Representation》 （GloVe）
+《GloVe: Global Vectors for Word Representation》 （GloVe）
 
 待补充
+
+
 
 2018.05.14
 
 text classification
 
-（1）最简单的方法：对文本中的每个word的representation vector做加权平均，得到的vector作为文本的vector；
+1、最简单的方法：对文本中的每个word的representation vector做加权平均，得到的vector作为文本的vector；
 
-（2）《Distributed Representations of Sentences and Documents》
+2、《Distributed Representations of Sentences and Documents》
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/15.png)
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/16.png)
 
 监督学习，分为两步：1）在训练集上训练word vectors W和paragraph vectors D，2）在推断阶段，固定W，训练D，得到测试集文本的paragraph vectors，再使用分类器以D为特征训练分类模型；
 
-（3）《Deep Unordered Composition Rivals Syntactic Methods for Text Classification》
+3、《Deep Unordered Composition Rivals Syntactic Methods for Text Classification》
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/17.png)
 
@@ -143,25 +145,27 @@ text classification
 
 文字检测（续一）
 
-（1）《Arbitrary-Oriented Scene Text Detection via Rotation Proposals》
+《Arbitrary-Oriented Scene Text Detection via Rotation Proposals》
 
 待补充
 
-（2）《Detecting Oriented Text in Natural Images by Linking Segments》
+《Detecting Oriented Text in Natural Images by Linking Segments》
 
 待补充
 
-（3）《Deep Direct Regression for Multi-Oriented Scene Text Detection》
+《Deep Direct Regression for Multi-Oriented Scene Text Detection》
 
 待补充
 
-（4）《Fused Text Segmentation Networks for Multi-oriented Scene Text Detection》
+《Fused Text Segmentation Networks for Multi-oriented Scene Text Detection》
 
 待补充
 
-（5）《IncepText: A New Inception-Text Module with Deformable PSROI Pooling for Multi-Oriented Scene Text Detection》
+《IncepText: A New Inception-Text Module with Deformable PSROI Pooling for Multi-Oriented Scene Text Detection》
 
 待补充
+
+
 
 2018.05.17
 
@@ -266,7 +270,7 @@ Total Loss:
 
 保持颜色的风格变换的两种方法：
 
-（1）Color histogram matching
+1、Color histogram matching
 
 变换style image的颜色，使变换后的style image的颜色的均值和协方差与content image相等，文章中使用线性变换，
 
@@ -274,7 +278,7 @@ Total Loss:
 
 具体使用的是Image Analogies color transfer和Cholesky transfer，《Colour mapping: A review of recent methods, extensions and applications》中有更多变换方法。
 
-（2）Luminance-only transfer
+2、Luminance-only transfer
 
 使用YIQ颜色空间，只在亮度Y通道上做风格变换，如果style image和content image的亮度通道的直方图不一致，可以先修改style image的亮度通道使得一致，
 
@@ -353,17 +357,19 @@ Face Alignment（一）
 
 《Face Alignment by Explicit Shape Regression》
 
-（1）选择初始Shape，train的时候，从训练集的所有groundtruth中选择，test的时候，从训练集的groundtruth中挑选有代表性的作为标准Shape；
+（1）借鉴了《Cascaded pose regression》的算法，给定初始Shape，使用shape-indexed特征，训练级联回归子，每个回归子的输出是Shape调整的偏移量；
 
-（2）two levels boosted regressiors，internal-level regression R和由所有R组成的external-level regression；
+（2）选择初始Shape，train的时候，从训练集的所有groundtruth中选择，test的时候，从训练集的groundtruth中挑选有代表性的作为标准Shape；
+
+（3）two levels boosted regressiors，internal-level regression R和由所有R组成的external-level regression；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/45.png)
 
 选择一个初始Shape，每一个Stage的R去拟合当前的Shape和groundtruth的偏差转换到Mean Shape空间的值(通过normalized shape操作)，把拟合的结果再转换到Shape空间；分成多个Stage比用一个Stage效果好，因为每个Stage使用的Shape Indexed Feature是在上一个Stage得到的Shape做相对的位置偏移得到的，随着Stages输出的Shape越来越准确，下一个Stage使用的特征也越来越准确；
 
-（3）internal-level regression R，由K个fern组成，每个fern从400特征的差值(160000个特征)里选择5个作为特征(包括5个thresholds)，输出为32(2的5次方)个bin，每一个bin里的输出是整个Shape的编译；因为每一个fern的每一个bin都是训练集的groundtruth和初始Shape的加权之后的结果，所以每一个R的输出都是groundtruth和初始Shape的加权和，保证了最终拟合的Shape在训练集的Shapes组成的线性空间里(因为normalized shape操作只有scale和rotation)；
+（4）internal-level regression R，由K个fern组成，每个fern从400特征的差值(160000个特征)里选择5个作为特征(包括5个thresholds)，输出为32(2的5次方)个bin，每一个bin里的输出是整个Shape的编译；因为每一个fern的每一个bin都是训练集的groundtruth和初始Shape的加权之后的结果，所以每一个R的输出都是groundtruth和初始Shape的加权和，保证了最终拟合的Shape在训练集的Shapes组成的线性空间里(因为normalized shape操作只有scale和rotation)；
 
-（4）Shape Indexed (Image) Features，两个像素点的插值作为特征，而且两个像素点的坐标使用相对于距离最近的关键点的相对坐标，选取特征时，根据regression target和特征之间的correlation来选取5个特征。
+（5）Shape Indexed (Image) Features，两个像素点的插值作为特征，而且两个像素点的坐标使用相对于距离最近的关键点的相对坐标，选取特征时，根据regression target和特征之间的correlation来选取5个特征。
 
 《Deep Convolutional Network Cascade for Facial Point Detection》
 
@@ -483,12 +489,13 @@ Identification(无)
 
 Face Alignment（二）
 
-
 《Face Alignment at 3000 FPS via Regressing Local Binary Features》
 
-(1)	对于每一个keypoint，在每个Stage里,先随机选取500个Shape-Indexed像素差值的二值化作为特征，训练random forest，把forest里所有的trees的leaves节点组成一个索引向量；
+（1）给定初始Shape，使用局部的二值特征生成特征向量，再用全局的线性回归得到Shape的偏移量，之所以使用局部特征而不是全局特征，是因为整张图片的候选特征太多，而且存在很多噪音，大多数有判决力的纹理信息都在人脸关键点的局部周围，而且关键点的位置和局部的纹理提供了充分的信息；
 
-(2)	把所有keypoints的索引向量链接起来作为特征，训练线性回归得到每个Stage的Shape的变化，因为线性回归的权重是所有训练集的Shapes的线性组合，所以最终拟合的Shape就是初始Shape和所有训练集的Shapes的线性组合，保证了Shape的约束。
+（2）对于每一个keypoint，在每个Stage里,先随机选取500个Shape-Indexed像素差值的二值化作为特征，训练random forest，把forest里所有的trees的leaves节点组成一个索引向量；
+
+（3）把所有keypoints的索引向量链接起来作为特征，训练线性回归得到每个Stage的Shape的变化，因为线性回归的权重是所有训练集的Shapes的线性组合，所以最终拟合的Shape就是初始Shape和所有训练集的Shapes的线性组合，保证了Shape的约束。
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/69.png)
 
@@ -534,17 +541,17 @@ Face Alignment（三）
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/76.png)
 
-1、先使用conv-deconv神经网络输出特征点的heat map，每个特征点对应一个channel，从训练集合的样本中使用k-mean方法选出N个shapes作为候选，根据heat map输出的特征点位置找出最接近的候选shape作为初始shape；
+（1）先使用conv-deconv神经网络输出特征点的heat map，每个特征点对应一个channel，从训练集合的样本中使用k-mean方法选出N个shapes作为候选，根据heat map输出的特征点位置找出最接近的候选shape作为初始shape；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/77.png)
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/78.png)
 
-2、提取Deep Shape-indexed Features，在1中的网络的最后一个feature map上,以每个关键点为中心，在b*b窗口上上做max pooling，concentrate所有channels的结果作为特征；
+（2）提取Deep Shape-indexed Features，在1中的网络的最后一个feature map上,以每个关键点为中心，在b*b窗口上上做max pooling，concentrate所有channels的结果作为特征；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/79.png)
 
-3、以Deep Shape-indexed Features为输入训练LSTM，回归shape的increment，在LSTM的每一个step,以调整后的shape重新提取Shape-indexed Feature作为输入。
+（3）以Deep Shape-indexed Features为输入训练LSTM，回归shape的increment，在LSTM的每一个step,以调整后的shape重新提取Shape-indexed Feature作为输入。
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/80.png)
 
@@ -560,11 +567,11 @@ Face Alignment（三）
 
 《Approaching human level facial landmark localization by deep learning》
 
-1、First Level CNN：
+（1）First Level CNN：
 
 用整张人脸回归出所有landmark的初始位置，根据初始位置对图片做相似变换,变换到标准shape；
 
-2、Second Level CNN：
+（2）Second Level CNN：
 
 每个landmark训练一个CNN，以landmark的局部区域作为输入，输出这个landmark临近的K个landmark的位置，最终每个lankmark的位置为所有CNN输出的平均值。
 
@@ -573,4 +580,57 @@ Face Alignment（三）
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/86.png)
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/87.png)
+
+
+《Deep Alignment Network: A convolutional neural network for robust face alignment》
+
+使用整张图片提取特征，给定一个初始Shape，级联式回归关键点位置，每一个Stage的回归子是一个CNN，回归子的输出为landmark调整的偏移量，第一个Stage以原图片作为输入，后面的Stage以变换过的图片、landmark heatmap、previous stage feature的concat作为输入；
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/88.png)
+
+（1）每个Stage的CNN：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/89.png)
+
+（2）归一化到标准Shape：除了Stage1，每个Stage根据当前Shape和标准Shape之间的相似变换对输入图片做归一化；
+
+（3）Landmark heatmap：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/90.png)
+
+（4）Feature image layer：用前一个Stage的fc1层全连接到一个56*56的feature，再upscale到112*112；
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/91.png)
+
+
+《Mnemonic Descent Method: A recurrent process applied for》
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/92.png)
+
+使用整张图片作为输入，给定初始Shape，使用CNN提取特征,在CNN之后用RNN输出Shape的偏移量，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/93.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/94.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/95.png)
+
+h为RNN的hidden state。
+
+
+《Supervised Descent Method and its Applications to Face Alignment》
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/96.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/97.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/98.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/99.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/100.png)
+
+给定初始Shape，根据当前Shape的SIFT特征得到每一步的R、b，从而算出Shape的偏移量。
+
+
 

@@ -634,3 +634,33 @@ h为RNN的hidden state。
 
 
 
+
+2018.09.09
+
+Image Feature
+
+《A COMBINED CORNER AND EDGE DETECTOR》（1988）
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/101.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/102.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/103.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/104.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/105.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/106.png)
+
+Treat gradient vectors as a set of (dx，dy) points with a center of mass defined as being at (0，0)，Fit an ellipse to that set of points via scatter matrix，Analyze ellipse parameters for varying cases，M矩阵类似于对(dx,dy)做PCA；
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/107.png)
+
+
+
+
+Harris Detector对旋转变换不变，但对scale变换改变。
+
+
+

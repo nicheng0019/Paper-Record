@@ -1,4 +1,4 @@
-2018.04.18
+		2018.04.18
 
 卷积神经网络的解释性
 
@@ -40,7 +40,7 @@
 
 1、最简单的思路：滑动窗口，每个窗口使用CNN分类，把得到的结果序列处理一下得到最终识别结果。缺点：处理分类结果序列时，何时该合并相邻的同样的分类结果，何时不合并很难判断；
 
-2、滑动窗口，每个窗口使用CNN分类，把得到的结果序列使用CTC来得到最终结果，解决（1）的问题。缺点：每个窗口只有窗口内的像素值信息，缺少上下文联系；
+2、滑动窗口，每个窗口使用CNN分类，把得到的结果序列使用CTC来得到最终结果，解决(1)的问题。缺点：每个窗口只有窗口内的像素值信息，缺少上下文联系；
 
 3、滑动窗口，每个窗口使用CNN分类，把得到的结果序列再传入RNN（比如两层的双向LSTM），再把RNN的输出结果使用CTC合并。缺点：滑动窗口会有重叠，重叠部分要做同样的卷积计算两次；（《Reading Scene Text in Deep Convolutional Sequences》）
 
@@ -58,7 +58,7 @@
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/5.png)
 
-补充：另一篇使用attention机制的文章是《Attention-based Extraction of Structured Information from Street View Imagery》，与（5）中两篇文章的不同之处是：（5）中文章使用的网络结构是 CNN-RNN(encoder) + Attention-RNN(decoder)，而这篇文章的网络结构是 CNN(encoder) + Attention-RNN(decoder)。原因是：（5）中的文章是检测一行文字，图片长度是变化的，需要先使用RNN转成固定长度的特征，而这篇文章检测的路牌是多行文字，图片尺寸固定，所以可以直接把最后一个卷积层作为特征。
+补充：另一篇使用attention机制的文章是《Attention-based Extraction of Structured Information from Street View Imagery》，与(5)中两篇文章的不同之处是：(5)中文章使用的网络结构是 CNN-RNN(encoder) + Attention-RNN(decoder)，而这篇文章的网络结构是 CNN(encoder) + Attention-RNN(decoder)。原因是：(5)中的文章是检测一行文字，图片长度是变化的，需要先使用RNN转成固定长度的特征，而这篇文章检测的路牌是多行文字，图片尺寸固定，所以可以直接把最后一个卷积层作为特征。
 
 
 
@@ -196,7 +196,7 @@ SFace脉络：
 
 使用修改过的AlexNet，把FC层改为卷积层，图片大小不限制，图片最小尺寸大于227，最大放大5倍，每个octave缩放3次（octave：八度音，音乐上相邻的八度音的频率比为1：2，所以图像上相邻的octave的尺寸比为1：2），最后一层生成1张heatmap，AlexNet的输入图片的尺寸为227x227，所以heatmap上一个点对应原图像上一个227x227的区域，stride为32，根据heatmap上大于门限值的点得到对应的原图片上区域为人脸，再使用NMS方法过滤得到的区域，可以检测不同角度的人脸，但无法给出具体角度,
 
-两种NMS方法：（1）NMS-max，即传统的NMS，两个boxes的IOU大于门限值，则删掉score小的box，（2）NMS-avg，根据IOU把boxes聚类，每个cluster里把score低的boxes删掉，取剩余的boxes的均值作为最终box的值，cluster里最大的score作为最终的score，EAST里使用的合并文字检测框的方法和这个比较像。
+两种NMS方法：(1)NMS-max，即传统的NMS，两个boxes的IOU大于门限值，则删掉score小的box，(2)NMS-avg，根据IOU把boxes聚类，每个cluster里把score低的boxes删掉，取剩余的boxes的均值作为最终box的值，cluster里最大的score作为最终的score，EAST里使用的合并文字检测框的方法和这个比较像。
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/18.png)
 
@@ -291,13 +291,13 @@ Total Loss:
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/35.png)
 
-（1）训练Reconstruction decoder：
+(1)训练Reconstruction decoder：
 
 使用VGG-19来encode特征，再训练与VGG-19对称的decoder来重建图片，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/36.png)
 
-（2）用encoder提取content image和style image的特征：
+(2)用encoder提取content image和style image的特征：
 
 Whitening transform: ccontent feature先减去均值,再做线性变换，
 
@@ -322,13 +322,13 @@ Optical Flow
 
 《FlowNet: Learning Optical Flow with Convolutional Networks》
 
-（1）FlowNetSimple：
+(1)FlowNetSimple：
 
 把两张图片stack到一起,在传入一个CNN里，输出optical flow；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/40.png)
 
-（2）FlowNetCorr：
+(2)FlowNetCorr：
 
 两张图片分别提取特,在某一层feature maps上计算相关性,
 
@@ -357,19 +357,19 @@ Face Alignment（一）
 
 《Face Alignment by Explicit Shape Regression》
 
-（1）借鉴了《Cascaded pose regression》的算法，给定初始Shape，使用shape-indexed特征，训练级联回归子，每个回归子的输出是Shape调整的偏移量；
+(1)借鉴了《Cascaded pose regression》的算法，给定初始Shape，使用shape-indexed特征，训练级联回归子，每个回归子的输出是Shape调整的偏移量；
 
-（2）选择初始Shape，train的时候，从训练集的所有groundtruth中选择，test的时候，从训练集的groundtruth中挑选有代表性的作为标准Shape；
+(2)选择初始Shape，train的时候，从训练集的所有groundtruth中选择，test的时候，从训练集的groundtruth中挑选有代表性的作为标准Shape；
 
-（3）two levels boosted regressiors，internal-level regression R和由所有R组成的external-level regression；
+(3)two levels boosted regressiors，internal-level regression R和由所有R组成的external-level regression；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/45.png)
 
 选择一个初始Shape，每一个Stage的R去拟合当前的Shape和groundtruth的偏差转换到Mean Shape空间的值(通过normalized shape操作)，把拟合的结果再转换到Shape空间；分成多个Stage比用一个Stage效果好，因为每个Stage使用的Shape Indexed Feature是在上一个Stage得到的Shape做相对的位置偏移得到的，随着Stages输出的Shape越来越准确，下一个Stage使用的特征也越来越准确；
 
-（4）internal-level regression R，由K个fern组成，每个fern从400特征的差值(160000个特征)里选择5个作为特征(包括5个thresholds)，输出为32(2的5次方)个bin，每一个bin里的输出是整个Shape的编译；因为每一个fern的每一个bin都是训练集的groundtruth和初始Shape的加权之后的结果，所以每一个R的输出都是groundtruth和初始Shape的加权和，保证了最终拟合的Shape在训练集的Shapes组成的线性空间里(因为normalized shape操作只有scale和rotation)；
+(4)internal-level regression R，由K个fern组成，每个fern从400特征的差值(160000个特征)里选择5个作为特征(包括5个thresholds)，输出为32(2的5次方)个bin，每一个bin里的输出是整个Shape的编译；因为每一个fern的每一个bin都是训练集的groundtruth和初始Shape的加权之后的结果，所以每一个R的输出都是groundtruth和初始Shape的加权和，保证了最终拟合的Shape在训练集的Shapes组成的线性空间里(因为normalized shape操作只有scale和rotation)；
 
-（5）Shape Indexed (Image) Features，两个像素点的插值作为特征，而且两个像素点的坐标使用相对于距离最近的关键点的相对坐标，选取特征时，根据regression target和特征之间的correlation来选取5个特征。
+(5)Shape Indexed (Image) Features，两个像素点的插值作为特征，而且两个像素点的坐标使用相对于距离最近的关键点的相对坐标，选取特征时，根据regression target和特征之间的correlation来选取5个特征。
 
 《Deep Convolutional Network Cascade for Facial Point Detection》
 
@@ -398,11 +398,11 @@ SeetaFace Detection，《Funnel-Structured Cascade for Multi-View Face Detection
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/49.png)
 
-（1）先用LAB特征【1】+boosted cascade classifiers粗略检测人脸，把确定不是人脸的区域排除掉，其中，对于不同视角的人脸，分别训练一个分类器；
+(1)先用LAB特征【1】+boosted cascade classifiers粗略检测人脸，把确定不是人脸的区域排除掉，其中，对于不同视角的人脸，分别训练一个分类器；
 
-（2）SURF特征+粗略的MLP分类器，从多个LAB分类器输出的窗口输入到一个MLP cascade classifier，所以有若干个MLP cascade classifiers，其中一个MLP cascade classifier是多个MLP级联起来，每个MLP使用的特征的个数和网络的size逐渐增加，使用group sparse【2】方法挑选每个stage使用的SURF特征，只有通过上一个MLP才会输入到下一个MLP继续判断；
+(2)SURF特征+粗略的MLP分类器，从多个LAB分类器输出的窗口输入到一个MLP cascade classifier，所以有若干个MLP cascade classifiers，其中一个MLP cascade classifier是多个MLP级联起来，每个MLP使用的特征的个数和网络的size逐渐增加，使用group sparse【2】方法挑选每个stage使用的SURF特征，只有通过上一个MLP才会输入到下一个MLP继续判断；
 
-（3）shape-indexed特征+精细的MLP分类器，只有一个MLP cascade classifier，提取关键点位置的SIFT特征输入到MLP，输出人脸判断和关键点位置的调整，通过人脸判断的再传入到下一个MLP。
+(3)shape-indexed特征+精细的MLP分类器，只有一个MLP cascade classifier，提取关键点位置的SIFT特征输入到MLP，输出人脸判断和关键点位置的调整，通过人脸判断的再传入到下一个MLP。
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/50.png)
 
@@ -434,7 +434,7 @@ SeetaFace Alignment，《Coarse-to-Fine Auto-Encoder Networks (CFAN) for Real-Ti
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/56.png)
 
-（1）global SAN，用图片原像素值作为特征，训练自编码网络，
+(1)global SAN，用图片原像素值作为特征，训练自编码网络，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/57.png)
 
@@ -444,7 +444,7 @@ SeetaFace Alignment，《Coarse-to-Fine Auto-Encoder Networks (CFAN) for Real-Ti
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/59.png)
 
-（2）local SANs，使用Shape-indexed特征(例如SIFT)作为输入，得到关键点的调整值，
+(2)local SANs，使用Shape-indexed特征(例如SIFT)作为输入，得到关键点的调整值，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/60.png)
 
@@ -491,11 +491,11 @@ Face Alignment（二）
 
 《Face Alignment at 3000 FPS via Regressing Local Binary Features》
 
-（1）给定初始Shape，使用局部的二值特征生成特征向量，再用全局的线性回归得到Shape的偏移量，之所以使用局部特征而不是全局特征，是因为整张图片的候选特征太多，而且存在很多噪音，大多数有判决力的纹理信息都在人脸关键点的局部周围，而且关键点的位置和局部的纹理提供了充分的信息；
+(1)给定初始Shape，使用局部的二值特征生成特征向量，再用全局的线性回归得到Shape的偏移量，之所以使用局部特征而不是全局特征，是因为整张图片的候选特征太多，而且存在很多噪音，大多数有判决力的纹理信息都在人脸关键点的局部周围，而且关键点的位置和局部的纹理提供了充分的信息；
 
-（2）对于每一个keypoint，在每个Stage里,先随机选取500个Shape-Indexed像素差值的二值化作为特征，训练random forest，把forest里所有的trees的leaves节点组成一个索引向量；
+(2)对于每一个keypoint，在每个Stage里,先随机选取500个Shape-Indexed像素差值的二值化作为特征，训练random forest，把forest里所有的trees的leaves节点组成一个索引向量；
 
-（3）把所有keypoints的索引向量链接起来作为特征，训练线性回归得到每个Stage的Shape的变化，因为线性回归的权重是所有训练集的Shapes的线性组合，所以最终拟合的Shape就是初始Shape和所有训练集的Shapes的线性组合，保证了Shape的约束。
+(3)把所有keypoints的索引向量链接起来作为特征，训练线性回归得到每个Stage的Shape的变化，因为线性回归的权重是所有训练集的Shapes的线性组合，所以最终拟合的Shape就是初始Shape和所有训练集的Shapes的线性组合，保证了Shape的约束。
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/69.png)
 
@@ -514,19 +514,19 @@ Image degradation system
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/71.png)
 
-（1）Motion Blur：
+(1)Motion Blur：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/72.png)
 
-（2）Atmospheric Turbulence Blur：
+(2)Atmospheric Turbulence Blur：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/73.png)
 
-（3）Uniform Out-of-Focus Blur：
+(3)Uniform Out-of-Focus Blur：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/74.png)
 
-（4）Uniform 2-D Blur：
+(4)Uniform 2-D Blur：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/75.png)
 
@@ -541,17 +541,17 @@ Face Alignment（三）
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/76.png)
 
-（1）先使用conv-deconv神经网络输出特征点的heat map，每个特征点对应一个channel，从训练集合的样本中使用k-mean方法选出N个shapes作为候选，根据heat map输出的特征点位置找出最接近的候选shape作为初始shape；
+(1)先使用conv-deconv神经网络输出特征点的heat map，每个特征点对应一个channel，从训练集合的样本中使用k-mean方法选出N个shapes作为候选，根据heat map输出的特征点位置找出最接近的候选shape作为初始shape；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/77.png)
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/78.png)
 
-（2）提取Deep Shape-indexed Features，在1中的网络的最后一个feature map上,以每个关键点为中心，在b*b窗口上上做max pooling，concentrate所有channels的结果作为特征；
+(2)提取Deep Shape-indexed Features，在1中的网络的最后一个feature map上,以每个关键点为中心，在b*b窗口上上做max pooling，concentrate所有channels的结果作为特征；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/79.png)
 
-（3）以Deep Shape-indexed Features为输入训练LSTM，回归shape的increment，在LSTM的每一个step,以调整后的shape重新提取Shape-indexed Feature作为输入。
+(3)以Deep Shape-indexed Features为输入训练LSTM，回归shape的increment，在LSTM的每一个step,以调整后的shape重新提取Shape-indexed Feature作为输入。
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/80.png)
 
@@ -567,11 +567,11 @@ Face Alignment（三）
 
 《Approaching human level facial landmark localization by deep learning》
 
-（1）First Level CNN：
+(1)First Level CNN：
 
 用整张人脸回归出所有landmark的初始位置，根据初始位置对图片做相似变换,变换到标准shape；
 
-（2）Second Level CNN：
+(2)Second Level CNN：
 
 每个landmark训练一个CNN，以landmark的局部区域作为输入，输出这个landmark临近的K个landmark的位置，最终每个lankmark的位置为所有CNN输出的平均值。
 
@@ -588,17 +588,17 @@ Face Alignment（三）
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/88.png)
 
-（1）每个Stage的CNN：
+(1)每个Stage的CNN：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/89.png)
 
-（2）归一化到标准Shape：除了Stage1，每个Stage根据当前Shape和标准Shape之间的相似变换对输入图片做归一化；
+(2)归一化到标准Shape：除了Stage1，每个Stage根据当前Shape和标准Shape之间的相似变换对输入图片做归一化；
 
-（3）Landmark heatmap：
+(3)Landmark heatmap：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/90.png)
 
-（4）Feature image layer：用前一个Stage的fc1层全连接到一个56*56的feature，再upscale到112*112；
+(4)Feature image layer：用前一个Stage的fc1层全连接到一个56*56的feature，再upscale到112*112；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/91.png)
 
@@ -663,9 +663,9 @@ Harris Detector对旋转变换不变，但对scale变换改变。
 
 《Local Grayvalue Invariants for Image Retrieval》（1997）
 
-（1）使用Harris Detector检测关键点；
+(1)使用Harris Detector检测关键点；
 
-（2）特征描述：
+(2)特征描述：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/108.png)
 
@@ -680,7 +680,7 @@ i、j、k、l遍历x1、x2两个维度，
 
 《Matching Images with Different Resolutions》（2002）
 
-（1）
+(1)
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/111.png)
 
@@ -696,18 +696,18 @@ m为低分辨率图片，n为高分辨率图片，假设没有旋转，在两个
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/114.png)
 
-（2）对于高分辨率图片，取不同的scale值，计算Local Jet描述子，最高到3阶，采用局部仿射不变的形式(见《Detection of local features invariant to affines transformations》)，共7维，和低分辨率图片的描述子比较，使用Mahalanobis距离，找到匹配度最高的。
+(2)对于高分辨率图片，取不同的scale值，计算Local Jet描述子，最高到3阶，采用局部仿射不变的形式(见《Detection of local features invariant to affines transformations》)，共7维，和低分辨率图片的描述子比较，使用Mahalanobis距离，找到匹配度最高的。
 
 
 《Detection of local features invariant to affines transformations》(2002)
 
-（1）特征点检测
+(1)特征点检测
 
 Harris-Laplace detector；
 
 仿射不变特征：TODO
 
-（2）描述子
+(2)描述子
 
 Local Jet：
 
@@ -733,17 +733,17 @@ Local Jet：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/120.png)
 
-（1）Harris detector在一个scale内表现较好，在不同的scales之间不鲁邦，所以在2D空间上，使用Harris detector找到极大值点，且大于门限值，作为候选点，
+(1)Harris detector在一个scale内表现较好，在不同的scales之间不鲁邦，所以在2D空间上，使用Harris detector找到极大值点，且大于门限值，作为候选点，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/121.png)
 
-（2）在不同的scales之间，Laplacian detector的极大值点具有鲁棒性，所以在3D空间上，使用Laplacian detector从候选点中找到极大值点，且大于门限值，
+(2)在不同的scales之间，Laplacian detector的极大值点具有鲁棒性，所以在3D空间上，使用Laplacian detector从候选点中找到极大值点，且大于门限值，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/122.png)
 
-（3）使用Local Jet的方向导数作为描述子，在关键点的邻域求导数，取直方图的峰值，最高为4阶导数，且除以一阶导数，共12维；
+(3)使用Local Jet的方向导数作为描述子，在关键点的邻域求导数，取直方图的峰值，最高为4阶导数，且除以一阶导数，共12维；
 
-（4）使用Mahalanobis distance比较描述子。
+(4)使用Mahalanobis distance比较描述子。
 
 
 《Scale & Affine Invariant Interest Point Detectors》（2004）
@@ -755,7 +755,7 @@ TODO
 
 《Distinctive Image Features from Scale-Invariant Keypoints》（SIFT， 2004）
 
-（1）Point Detector
+(1)Point Detector
 
 difference-of-Gaussian function(approximation to the scale-normalized Laplacian of Gaussian)，
 
@@ -771,7 +771,7 @@ difference-of-Gaussian function(approximation to the scale-normalized Laplacian 
 
 Laplacian Image为L(x,y,σ)，L(x,y, kσ)，L(x,y,k^2 * sigma), …… ,L(x,y,k^s * sigma)，L(x,y,k^(s+1) * sigma)，L(x,y,k^(s+2) * sigma)，相邻的两个L相减得到一个octave里的D，下一个octave里第一个L是对L(x,y,k^s * sigma)做下采样，在得到的difference-of-Gaussian scale space（即所有D）上的3*3*3邻域中寻找极值点；
 
-（2）准确的keypoint定位
+(2)准确的keypoint定位
 
 以采样点为原点做Taylor展开，
 
@@ -787,7 +787,7 @@ Laplacian Image为L(x,y,σ)，L(x,y, kσ)，L(x,y,k^2 * sigma), …… ,L(x,y,k^
 
 如果此值的绝对值小于0.03，则丢弃这个关键点；
 
-（3）消除边的响应
+(3)消除边的响应
 
 Hessian matrix的特征值和主曲率成比例，
 
@@ -801,7 +801,7 @@ Hessian matrix的特征值和主曲率成比例，
 
 α、β为特征值，且α>=β，α=rβ，因为边的主曲率的ratio值比较大，所以利用Tr(H)平方和Det(H)的比值，消除ratio大于r的keypoints（r=10）；
 
-（3）方向判定
+(3)方向判定
 
 为了保持特征旋转不变，所以要给关键点确定一个主要的方向。选择距离keypoint被检测到的scale最近的Gaussian光滑图像，计算keypoint邻域里的采样点的梯度大小和方向，
 
@@ -809,13 +809,13 @@ Hessian matrix的特征值和主曲率成比例，
 
 计算36个bins的梯度方向直方图，每一个采样点对直方图的分配为梯度大小乘以标准差为keypoint的scale的1.5倍的Gaussian权重，选择直方图的峰值作为方向，在最高峰值的80%以内的方向也选为方向，所以同一个keypoint会生成多个同样位置和scale、但不同方向的keypoint，用最接近峰值的3个直方图值来插值，得到峰值最终的准确位置；
 
-（4）局部图像描述子
+(4)局部图像描述子
 
-类似于（3），选择keypoint最近的scale space Gaussian模糊图像，采样梯度的大小和方向。描述子的坐标和梯度方向要相对（3）中计算出的keypoint方向旋转，使用描述子窗口宽度1.5倍标准差的Gaussian权重函数作为采样点梯度大小的权重。在4x4区域里计算梯度直方图，直方图的方向分成8个bin，共计算4x4个区域，所以描述子的维度为4x4x8=128。在计算每个采样点的梯度方向对bin的分配时，要使用trilinear，除了空间上的bilinear，还有bin上的linear：每一个梯度会分配到梯度方向和bin中心方向值最近的两个bins，分配值大小为梯度大小乘以(1-d)，d为梯度方向和bin中心方向在bin空间单位化后的距离。得到的描述子向量先归一化为单位向量，对于大于0.2的分量限制为0.2，再归一化为单位向量；
+类似于(3)，选择keypoint最近的scale space Gaussian模糊图像，采样梯度的大小和方向。描述子的坐标和梯度方向要相对(3)中计算出的keypoint方向旋转，使用描述子窗口宽度1.5倍标准差的Gaussian权重函数作为采样点梯度大小的权重。在4x4区域里计算梯度直方图，直方图的方向分成8个bin，共计算4x4个区域，所以描述子的维度为4x4x8=128。在计算每个采样点的梯度方向对bin的分配时，要使用trilinear，除了空间上的bilinear，还有bin上的linear：每一个梯度会分配到梯度方向和bin中心方向值最近的两个bins，分配值大小为梯度大小乘以(1-d)，d为梯度方向和bin中心方向在bin空间单位化后的距离。得到的描述子向量先归一化为单位向量，对于大于0.2的分量限制为0.2，再归一化为单位向量；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/136.png)
 
-（5）关键点匹配
+(5)关键点匹配
 使用Best-Bin-First（BBF）【1】算法查找特征的近邻。
 
 注【1】
@@ -826,9 +826,9 @@ TODO
 
 《SURF: Speeded Up Robust Features》（2006）
 
-思路：（1）基于Hessian的检测子要比相匹配的基于Harris的检测子更稳定和具有可重复性，使用Hessian矩阵的行列式比使用Hessian矩阵的迹（Laplacian）更有优势；（2）使用DoG类似的近似可以提高速度，但准确度损失很少；
+思路：(1)基于Hessian的检测子要比相匹配的基于Harris的检测子更稳定和具有可重复性，使用Hessian矩阵的行列式比使用Hessian矩阵的迹（Laplacian）更有优势；(2)使用DoG类似的近似可以提高速度，但准确度损失很少；
 
-（1）Fast-Hessian Detector
+(1)Fast-Hessian Detector
 
 Hessian矩阵的定义为：
 
@@ -842,7 +842,7 @@ Hessian矩阵的定义为：
 
 在图片空间和Scale空间的3*3*3邻域里寻找Hessian矩阵行列式的最大值，使用SIFT中类似的方法插值出sub-pixel、sub-scale的Hessian矩阵行列式的最大值；
 
-（2）描述子
+(2)描述子
 
 （2.1）方向判决
 
@@ -853,13 +853,13 @@ TODO
 
 《Machine learning for high-speed corner detection》（2006）
 
-（1）FAST: Features from Accelerated Segment Test
+(1)FAST: Features from Accelerated Segment Test
 
 点p的周围一圈如果有连续n个点的像素值比p点的像素值大于t，或者小于t，则p是一个corner，n的一个常用值为12，这样可以先只检查1、5、9、13四个点：如果p是一个corner，则四个点里至少有三个满足上述条件；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/140.png)
 
-（2）Machine learning a corner detector
+(2)Machine learning a corner detector
 
 根据p点和近邻x点的像素值，以及门限t，可以把p分为三组：
 
@@ -873,7 +873,7 @@ TODO
 
 选择合适的x和t，把p分成三个子集后，在每个子集中继续重复上述步骤，直到一个子集的熵为0，最终形成一棵decision tree；
 
-（3）Non-maximal suppression
+(3)Non-maximal suppression
 
 对每一个选出的corner赋予一个得分V，相邻的corners，丢弃V的值低的，V的几种选择：
 
@@ -886,15 +886,119 @@ TODO
 其中，V的值使用p的邻域里所有的x计算。
 
 
+《CenSurE: Center Surround Extremas for Realtime Feature Detection and Matching》（2008）
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/146.png)
+
+使用bi-level center-surround filters近似Laplacian，bi-level意思是filter的每个权重值为1或者-1，不同size的filter对应不同的scale，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/147.png)
+
+(1)CenSurE Using Difference of Boxes
+
+I为内部box的权重，O为外部box的权重，I和O满足：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/148.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/149.png)
+
+block size n取值为[1,2,3,4,5,6,7]，1和7为边界，所以最低的scale对应block size 2，对应的LoG的sigma近似为1.885，5个中间的scales覆盖了2.5个octaves；
+
+(2)CenSurE Using Octagons
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/150.png)
+
+与box类似，要找到DC response是0的权重I和O，(DC response:对于常数区域的响应？)；
+
+(3)非极大抑制
+
+得到filters的响应后，在3x3x3的邻域内找到极值点，过滤掉那些响应小于门限值的点，因为所有的filters都是在原图片上计算，所以不需要对图片进行subsample；
+
+(4)直线抑制
+
+计算Harris measure，在block size 2上使用9x9的window和门限值10，window的大小和scale线性相关，scale越高,window越大，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/151.png)
+
+(5)filter计算
+
+使用integral image计算filter response：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/152.png)
+
+α为倾斜角度，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/153.png)
+
+(6)Modified Upright SURF (MU-SURF) Descriptor
+
+TODO
+
+
+
+《BRIEF: Binary Robust Independent Elementary Features》（2010）
+
+(1)关键点检测
+
+使用FAST（《Machine learning for high-speed corner detection》）或者CenSurE（《CenSurE: Center Surround Extremas for Realtime Feature Detection and Matching》）方法检测；
+
+(2)描述子
+
+在关键点9x9的邻域里，先使用方差为2的高斯核平滑，再选取n对点，把每对点的差值二值化，二值化得到的0或1连接成特征向量，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/154.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/155.png)
+
+每对点选取的方法为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/156.png)
+
+使用Hamming distances对关键点特征进行匹配；
+
+(3)BRIEF特征不是旋转不变的。
 
 
 
 
+《ORB: an efficient alternative to SIFT or SURF》（2011）
+
+(1)关键点检测及方向判断
+
+使用半径为9的FAST Detector检测关键点，再使用Harris corner measure过滤掉不是corner的关键点。在关键点的patch区域里使用intensity centroid方法判断每个关键点的方向，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/157.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/158.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/159.png)
+
+atan2为四个象限的arctan；
+
+(2)关键点描述子
+
+使用BRIEF做为特征，为了满足旋转不变性，使用关键点的方向计算Steered BRIEF，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/160.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/161.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/162.png)
+
+(x,y)为提取二值test点的位置，R为关键点方向的旋转矩阵，其中关键点的方向被离散化为12°的间隔，这样可以预计算旋转后的位置。
+
+但是Steered BRIEF的variance更低，所以使用以下方法选取test点的位置：选取关键点的31x31邻域作为patch，每一个test是5x5的子窗口，所以共有205590中可能的test，在训练集上计算所有的test，根据test的平均值和0。5的距离从小到大排序， 构成向量T，把T中第一个test放入结果向量R中，并从T中移除，继续从T中取出test，计算该test和R中的test的相关性，如果大于门限值，则丢弃，否则放入R，重复这个过程最终得到256维的R，如果R中的test个数小于256，则提高相关性门限值重新尝试；
+
+(3)	二值特征匹配
+
+使用multi-probe Locality Sensitive Hashing（【2】）进行最近邻搜索。
 
 
+注【2】
 
+《Multi-probe LSH: efficient indexing for high-dimensional similarity search》
 
-
+TODO
 
 
 

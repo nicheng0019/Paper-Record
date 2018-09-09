@@ -653,14 +653,77 @@ Image Feature
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/106.png)
 
-Treat gradient vectors as a set of (dx，dy) points with a center of mass defined as being at (0，0)，Fit an ellipse to that set of points via scatter matrix，Analyze ellipse parameters for varying cases，M矩阵类似于对(dx,dy)做PCA；
+Treat gradient vectors as a set of (dx，dy) points with a center of mass defined as being at (0，0)，Fit an ellipse to that set of points via scatter matrix，Analyze ellipse parameters for varying cases，M矩阵类似于对(dx，dy)做PCA；
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/107.png)
 
-
-
-
 Harris Detector对旋转变换不变，但对scale变换改变。
+
+
+
+《Local Grayvalue Invariants for Image Retrieval》（1997）
+
+（1）使用Harris Detector检测关键点；
+
+（2）特征描述：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/108.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/109.png)
+
+i、j、k、l遍历x1、x2两个维度，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/110.png)
+
+描述子对scale变换保持不变。
+
+
+《Matching Images with Different Resolutions》（2002）
+
+（1）
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/111.png)
+
+m为低分辨率图片，n为高分辨率图片，假设没有旋转，在两个分辨率的图片上分别计算Harris Detector，根据
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/112.png)
+
+可得
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/113.png)
+
+对高分辨率图片使用scale space，令s = 1 / h，可得
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/114.png)
+
+（2）对于高分辨率图片，取不同的scale值，计算Local Jet描述子，最高到3阶，采用局部仿射不变的形式(见《Detection of local features invariant to affines transformations》)，共7维，和低分辨率图片的描述子比较，使用Mahalanobis距离，找到匹配度最高的。
+
+
+《Detection of local features invariant to affines transformations》(2002)
+
+(1)特征点检测
+
+Harris-Laplace detector
+
+仿射不变特征:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

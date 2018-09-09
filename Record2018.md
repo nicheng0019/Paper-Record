@@ -701,11 +701,94 @@ m为低分辨率图片，n为高分辨率图片，假设没有旋转，在两个
 
 《Detection of local features invariant to affines transformations》(2002)
 
-(1)特征点检测
+（1）特征点检测
 
-Harris-Laplace detector
+Harris-Laplace detector；
 
-仿射不变特征:
+仿射不变特征：TODO
+
+（2）描述子
+
+Local Jet：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/115.png)
+
+可以使用Local Jet的方向导数作为描述子，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/116.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/117.png)
+
+应该为v[0，……，11]，仿射不变，或者使用Local Jet的组合作为描述子，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/118.png)
+
+这个描述子对旋转不变，如果去掉前两个分支，并且剩余的分支除以第二个分支的合适的幂，则描述子对仿射不变。
+
+
+
+《Indexing based on scale invariant interest points》（《Detection of local features invariant to affines transformations》的部分内容，2001）
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/119.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/120.png)
+
+（1）Harris detector在一个scale内表现较好，在不同的scales之间不鲁邦，所以在2D空间上，使用Harris detector找到极大值点，且大于门限值，作为候选点，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/121.png)
+
+（2）在不同的scales之间，Laplacian detector的极大值点具有鲁棒性，所以在3D空间上，使用Laplacian detector从候选点中找到极大值点，且大于门限值，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/122.png)
+
+（3）使用Local Jet的方向导数作为描述子，在关键点的邻域求导数，取直方图的峰值，最高为4阶导数，且除以一阶导数，共12维；
+
+（4）使用Mahalanobis distance比较描述子。
+
+
+《Scale & Affine Invariant Interest Point Detectors》（2004）
+
+The DoG detector detects mainly blobs, whereas the Harris detector responds to corners and highly textured points, hence these detectors extract complementary features in images.
+
+TODO
+
+
+《Distinctive Image Features from Scale-Invariant Keypoints》（SIFT， 2004）
+
+（1）Point Detector
+
+difference-of-Gaussian function(approximation to the scale-normalized Laplacian of Gaussian)，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/123.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/124.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/125.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/126.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/127.png)
+
+Laplacian Image为L(x,y,σ)，L(x,y, kσ)，L(x,y,k^2 * sigma), …… ,L(x,y,k^s * sigma)，L(x,y,k^(s+1) * sigma)，L(x,y,k^(s+2) * sigma)，相邻的两个L相减得到一个octave里的D，下一个octave里第一个L是对L(x,y,k^s * sigma)做下采样，在得到的difference-of-Gaussian scale space（即所有D）上的3*3*3邻域中寻找极值点；
+
+（2）准确的keypoint定位
+
+以采样点为原点做Taylor展开，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/128.png)
+
+要求出D(x)的极值点，上式对x求导，令结果=0，求出x的置，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/129.png)
+
+极值为
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/130.png)
+
+如果此值的绝对值小于0.03，则丢弃这个关键点；
+
+（3）消除边的响应
+
 
 
 

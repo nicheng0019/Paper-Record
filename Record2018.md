@@ -789,10 +789,101 @@ Laplacian Image为L(x,y,σ)，L(x,y, kσ)，L(x,y,k^2 * sigma), …… ,L(x,y,k^
 
 （3）消除边的响应
 
+Hessian matrix的特征值和主曲率成比例，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/131.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/132.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/133.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/134.png)
+
+α、β为特征值，且α>=β，α=rβ，因为边的主曲率的ratio值比较大，所以利用Tr(H)平方和Det(H)的比值，消除ratio大于r的keypoints（r=10）；
+
+（3）方向判定
+
+为了保持特征旋转不变，所以要给关键点确定一个主要的方向。选择距离keypoint被检测到的scale最近的Gaussian光滑图像，计算keypoint邻域里的采样点的梯度大小和方向，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/135.png)
+
+计算36个bins的梯度方向直方图，每一个采样点对直方图的分配为梯度大小乘以标准差为keypoint的scale的1.5倍的Gaussian权重，选择直方图的峰值作为方向，在最高峰值的80%以内的方向也选为方向，所以同一个keypoint会生成多个同样位置和scale、但不同方向的keypoint，用最接近峰值的3个直方图值来插值，得到峰值最终的准确位置；
+
+（4）局部图像描述子
+
+类似于（3），选择keypoint最近的scale space Gaussian模糊图像，采样梯度的大小和方向。描述子的坐标和梯度方向要相对（3）中计算出的keypoint方向旋转，使用描述子窗口宽度1.5倍标准差的Gaussian权重函数作为采样点梯度大小的权重。在4x4区域里计算梯度直方图，直方图的方向分成8个bin，共计算4x4个区域，所以描述子的维度为4x4x8=128。在计算每个采样点的梯度方向对bin的分配时，要使用trilinear，除了空间上的bilinear，还有bin上的linear：每一个梯度会分配到梯度方向和bin中心方向值最近的两个bins，分配值大小为梯度大小乘以(1-d)，d为梯度方向和bin中心方向在bin空间单位化后的距离。得到的描述子向量先归一化为单位向量，对于大于0.2的分量限制为0.2，再归一化为单位向量；
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/136.png)
+
+（5）关键点匹配
+使用Best-Bin-First（BBF）【1】算法查找特征的近邻。
+
+注【1】
+
+《Shape indexing using approximate nearest-neighbour search in highdimensional spaces》
+
+TODO
+
+《SURF: Speeded Up Robust Features》（2006）
+
+思路：（1）基于Hessian的检测子要比相匹配的基于Harris的检测子更稳定和具有可重复性，使用Hessian矩阵的行列式比使用Hessian矩阵的迹（Laplacian）更有优势；（2）使用DoG类似的近似可以提高速度，但准确度损失很少；
+
+（1）Fast-Hessian Detector
+
+Hessian矩阵的定义为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/137.png)
+
+使用长方形区域为常值的box filter近似Gaussian导数，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/138.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/139.png)
+
+在图片空间和Scale空间的3*3*3邻域里寻找Hessian矩阵行列式的最大值，使用SIFT中类似的方法插值出sub-pixel、sub-scale的Hessian矩阵行列式的最大值；
+
+（2）描述子
+
+（2.1）方向判决
+
+在关键点半径为6s的圆形邻域里，计算Haar-wavelet响应，s为keypoint被检测到的scale，采样的步骤和Haar-wavelet响应的计算也在当前scale进行，使用积分图代替wavelet， wavelet的边长为4s.得到wavelet响应后，用以关键点为中心，标准差为2.5s的Gaussian核加权.以覆盖π/3的角度滑动窗口，计算窗口内的x、y方向wavelet响应的和为新的向量，最长向量的方向为关键点的方向；
+
+TODO
 
 
+《Machine learning for high-speed corner detection》（2006）
 
+（1）FAST: Features from Accelerated Segment Test
 
+点p的周围一圈如果有连续n个点的像素值比p点的像素值大于t，或者小于t，则p是一个corner，n的一个常用值为12，这样可以先只检查1、5、9、13四个点：如果p是一个corner，则四个点里至少有三个满足上述条件；
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/140.png)
+
+（2）Machine learning a corner detector
+
+根据p点和近邻x点的像素值，以及门限t，可以把p分为三组：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/141.png)
+
+以熵作为判断规则：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/142.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/143.png)
+
+选择合适的x和t，把p分成三个子集后，在每个子集中继续重复上述步骤，直到一个子集的熵为0，最终形成一棵decision tree；
+
+（3）Non-maximal suppression
+
+对每一个选出的corner赋予一个得分V，相邻的corners，丢弃V的值低的，V的几种选择：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/144.png)
+
+为了计算速度，最终使用下式计算V：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/145.png)
+
+其中，V的值使用p的邻域里所有的x计算。
 
 
 

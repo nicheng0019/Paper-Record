@@ -973,7 +973,7 @@ As pointed out by David Lowe（《Distinctive image features from scale-invarian
 
 (2)描述子
 
-在关键点9x9的邻域里，先使用方差为2的高斯核平滑，再选取n对点，把每对点的差值二值化，二值化得到的0或1连接成特征向量，
+在关键点9x9的邻域里，先使用方差为2的高斯核平滑，再选取n对点（n=128，256，512），把每对点的差值二值化，二值化得到的0或1连接成特征向量，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/154.png)
 

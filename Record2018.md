@@ -1031,6 +1031,82 @@ TODO
 
 
 
+《Adaptive and Generic Corner Detection Based on the Accelerated Segment Test》（AGAST, 2010）
+
+TODO
+
+
+《DAISY: An Efficient Dense Descriptor Applied to Wide-Baseline Stereo》（2010）
+
+TODO
+
+
+《Brisk: Binary robust invariant scalable keypoints》（2011）
+
+(1)	ScaleSpace Keypoint Detection
+
+n个octaves c和n个intra-octaves d，通常n=4，原始图片对应c0，其余的c逐步地half-sampling，每个d(i)在c(i)和c(i+1)之间，d0是c0的1.5倍下采样。
+
+使用FAST 9-16检测子，在每一个octave和intra-octave上使用同样的门限T找到潜在的兴趣点，在scale-space上使用NMS：首先，点要满足相比于同一layer上的8个邻域点的FAST score是极大值，score定义为判定一个点是corner的最大门限，其次，上一层和下一层的layer的scores也要更小。在每一层上检查size相等的正方形patch：在极大值被检测到的layer上边长为2个像素(即3x3个点)。相邻的layers使用插值得到FAST scores。
+
+在3个scores-patches上的3x3区域里使用2D二次函数差值，得到三个layers的子像素的score极大值，沿着scale坐标轴拟合1D抛物线得到最终的score和scale。最后，根据得到的scale在相邻的两个layers的patches上重新插值得到极大值点的坐标。
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/165.png)
+
+(2)	Keypoint Description
+
+(2.1) Sampling Pattern and Rotation Estimation
+
+关键点邻域的采样模式为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/166.png)
+
+对于每个采样点p，使用Gaussian光滑，标准差正比于点p与关键点的距离。对于N个采样点，共有N*(N-1)/2个采样点对，局部梯度定义为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/167.png)
+
+I为光滑后的像素值。
+
+考虑所有采样点对集合
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/168.png)
+
+根据距离定义两个子集short-distance pairings S和long-distance pairings L：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/169.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/170.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/171.png)
+
+t为关键点的scale，估计关键点的方向为
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/172.png)
+
+(2.2) Building the Descriptor
+
+使用(2.1)中估计的方向，在关键点邻域采样，描述子为所有short-distance pairings S的像素值的比较：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/173.png)
+
+BRISK与BRIEF的不同：BRISK使用确定的采样模式导致一致的采样点；使用裁剪过的Gaussian光滑，不会破坏接近的两个比较点的像素信息；BRISK使用更少的采样点，即一个采样点参与多次比较；在空间上限制像素点的比较。
+
+根据采样模式和距离的门限，最终得到的bit-string长度为512。
+
+(3)	Descriptor Matching
+
+使用Hamming distance比较描述子，即两个描述子中不同的bit的数量。
+
+
+
+
+
+
+
+
+
+
+
 
 
 

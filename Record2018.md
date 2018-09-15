@@ -1033,12 +1033,19 @@ TODO
 
 《Adaptive and Generic Corner Detection Based on the Accelerated Segment Test》（AGAST, 2010）
 
-TODO
+在FAST算法中，构造一棵三叉树，原点p的每个相邻点x有四种状态：unknown(u)， darker(d)， brighter(b) or similar(s)，每个学习的步骤使用两个问题：“is brighter” and “is darker”。
+
+新加两种状态：“not brighter” and “not darker”。训练一棵二叉决策树，树的每个节点选择一个邻域点x和一个问题：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/174.png)
+
+
 
 
 《DAISY: An Efficient Dense Descriptor Applied to Wide-Baseline Stereo》（2010）
 
 TODO
+
 
 
 《Brisk: Binary robust invariant scalable keypoints》（2011）

@@ -838,6 +838,8 @@ Hessian矩阵的定义为：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/138.png)
 
+计算区域的Gaussian导数矩阵和box filter的Frobenius范数，可得：
+
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/139.png)
 
 在图片空间和Scale空间的3*3*3邻域里寻找Hessian矩阵行列式的最大值，使用SIFT中类似的方法插值出sub-pixel、sub-scale的Hessian矩阵行列式的最大值；
@@ -1016,7 +1018,7 @@ atan2为四个象限的arctan；
 
 (x,y)为提取二值test点的位置，R为关键点方向的旋转矩阵，其中关键点的方向被离散化为12°的间隔，这样可以预计算旋转后的位置。
 
-但是Steered BRIEF的variance更低，所以使用以下方法选取test点的位置：选取关键点的31x31邻域作为patch，每一个test是5x5的子窗口，所以共有205590中可能的test，在训练集上计算所有的test，根据test的平均值和0。5的距离从小到大排序， 构成向量T，把T中第一个test放入结果向量R中，并从T中移除，继续从T中取出test，计算该test和R中的test的相关性，如果大于门限值，则丢弃，否则放入R，重复这个过程最终得到256维的R，如果R中的test个数小于256，则提高相关性门限值重新尝试；
+但是Steered BRIEF的variance更低，所以使用以下方法选取test点的位置：选取关键点的31x31邻域作为patch，每一个test是5x5的子窗口，所以共有205590中可能的test，在训练集上计算所有的test，根据test的平均值和0.5的距离从小到大排序（均值越接近0.5，说明变化越大，特征越具有判决力）， 构成向量T，把T中第一个test放入结果向量R中，并从T中移除，继续从T中取出test，计算该test和R中的test的相关性，如果大于门限值，则丢弃，否则放入R，重复这个过程最终得到256维的R，如果R中的test个数小于256，则提高相关性门限值重新尝试；
 
 (3)二值特征匹配
 
@@ -1103,6 +1105,43 @@ BRISK与BRIEF的不同：BRISK使用确定的采样模式导致一致的采样�
 (3)	Descriptor Matching
 
 使用Hamming distance比较描述子，即两个描述子中不同的bit的数量。
+
+
+《FREAK: Fast Retina Keypoint》（2012）
+
+(1)Retinal sampling pattern
+
+感知域（receptive fields）的拓扑结构为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/175.png)
+
+每个圆表示对应采样点的Gaussian核的标准差；
+
+(2)Coarse-to-fine descriptor
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/176.png)
+
+P是一对感知域，N是描述子的长度， 
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/177.png)
+
+I是感知域对P光滑后的像素值。使用类似ORB中的方法找到描述子的感知域对:求出所有关键点的所有感知域对的二值特征；求出每一个感知域对的均值，选出变化最大（即均值最接近0.5）的感知域对；依次从剩下的二值特征里选择和已选的特征相关性最小且均值最接近0.5的；
+
+(3)Saccadic search
+
+搜索的时候，先比较描述子的钱16bytes，如果距离小于门限值，再继续比较下一个byte；
+
+(4)Orientation
+
+用来计算局部梯度的所有对为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/178.png)
+
+设G为所有用来计算梯度的感知域对，则方向为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/179.png)
+
+M为G中对的个数。
 
 
 

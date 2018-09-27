@@ -2,9 +2,19 @@
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/101.png)
 
+MORAVEC方法：寻找偏移(x，y)，使得在一个长方形窗口内偏移后的图像像素和原图片像素的差的平方和最小，(x，y)只考虑固定几个方向。
+
+Harris方法的改进：
+
+(1)MORAVEC方法只考虑几个间隔45度的固定方向，Harris方法通过Taylor展开可以覆盖所有方向的小的偏移：
+
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/102.png)
 
+(2)MORAVEC方法使用长方形窗口且所有像素的权重一样，所以对噪音敏感，Harris方法使用圆形光滑的窗口，例如Gaussian权重：
+
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/103.png)
+
+(3)MORAVEC方法容易对边产生响应，Harris方法使用E在偏移方向上的变化来测量corner：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/104.png)
 

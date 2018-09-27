@@ -76,7 +76,7 @@ m为低分辨率图片，n为高分辨率图片，假设没有旋转，在两个
 
 Harris-Laplace detector；
 
-仿射不变特征：TODO
+仿射不变特征：见《An affine invariant interest point detector》；
 
 (2)描述子
 
@@ -104,7 +104,7 @@ Local Jet：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/120.png)
 
-(1)Harris detector在一个scale内表现较好，在不同的scales之间不鲁邦，所以在2D空间上，使用Harris detector找到极大值点，且大于门限值，作为候选点，
+(1)Harris detector在一个scale内表现较好，在不同的scales之间不鲁棒，所以在2D空间上，使用Harris detector找到极大值点，且大于门限值，作为候选点，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/121.png)
 

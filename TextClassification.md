@@ -65,6 +65,32 @@ multinomial model的计算：P(c)是class c的documents中word出现的次数除
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/189.png)
 
 
+《Latent Dirichlet Allocation》
 
+《Text Classification from Labeled and Unlabeled Documents using EM》中的模型为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/190.png)
+
+P(w)为document的概率，z是topics，这个模型没有获取一个document表达多个topics的概率；
+
+《Probabilistic latent semantic indexing》（《Unsupervised Learning by Probabilistic Latent Semantic Analysis》）中的模型为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/191.png)
+
+或：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/192.png)
+
+z为hidden topic，这个模型得到了document包括多个topics的概率，但是P(z|d)的值只能在训练集上得到；
+
+LDA模型：
+
+设一个document w为<w(1)…w(N)>，theta从Dirichlet(alpha(1)…alpha(k))分布中采样，topic z从以theta为概率的多项式分布中采样，在给定z的条件下，word w(n)被采样的概率为P(w(n)|z)，则document的概率为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/193.png)
+
+Inference and learning：
+
+使用《An Introduction to Variational Methods for Graphical Models》中的方法。
 
 

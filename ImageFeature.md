@@ -117,6 +117,37 @@ Local Jet：
 (4)使用Mahalanobis distance比较描述子。
 
 
+《An affine invariant interest point detector》 (2002)
+It is based on three key ideas: 1) The second moment matrix computed in a point can be used to normalize a region in an affine invariant way (skew and stretch). 2) The scale of the local structure is indicated by local extrema of normalized derivatives over scale. 3) An affine-adapted Harris detector determines the location of interest points.
+
+(1) Affine Gaussian scale-space
+
+在几个scale上使用Harris measure：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/194.png)
+ 
+在uniform Gaussian上，自动scale选择基于正则化的Laplacian的最大值：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/195.png)
+ 
+在仿射scale空间上，non-uniform Gaussian核定义为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/196.png)
+ 
+在non-uniform scale空间上，二阶moment矩阵定义为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/197.png)
+
+
+《Robust Wide Baseline Stereo from Maximally Stable Extremal Regions》 (2002)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/198.png)
+
+让某个极值区域的面积在序列中变化率最小的像素level作为该区域的threshold，位置和threshold同时作为一个MSER的输出；
+
+TODO
+
+
 《Scale & Affine Invariant Interest Point Detectors》（2004）
 
 The DoG detector detects mainly blobs, whereas the Harris detector responds to corners and highly textured points, hence these detectors extract complementary features in images.

@@ -9,7 +9,8 @@
 
 《DenseBox: Unifying Landmark Localization with End to End Object Detection》
 
-全卷积网络，输出heatmap和左上\右下两个点的相对位置，类似于EAST算法，使用多个尺寸测试，可以检测关键点。
+全卷积网络，输出heatmap和左上\右下两个点的相对位置，类似于EAST算法，使用多个尺寸测试，输出的box位置回归为上下左右相对于当前点位置的偏移，且相对于图像尺寸归一化为[0, 1]。可以加入关键点位置训练来refine网络。
+
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/19.png)
 

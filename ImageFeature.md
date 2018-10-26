@@ -377,7 +377,7 @@ As pointed out by David Lowe（《Distinctive image features from scale-invarian
 
 (2)描述子
 
-在关键点9x9的邻域里，先使用方差为2的高斯核平滑，再选取n对点（n=128，256，512），把每对点的差值二值化，二值化得到的0或1连接成特征向量，
+在关键点9x9的邻域里，先使用方差为2的高斯核平滑，再在邻域里选取n对点（n=128，256，512），把每对点的差值二值化，二值化得到的0或1连接成特征向量，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/154.png)
 
@@ -420,7 +420,7 @@ atan2为四个象限的arctan；
 
 (x,y)为提取二值test点的位置，R为关键点方向的旋转矩阵，其中关键点的方向被离散化为12°的间隔，这样可以预计算旋转后的位置。
 
-但是Steered BRIEF的variance更低，所以使用以下方法选取test点的位置：选取关键点的31x31邻域作为patch，每一个test是5x5的子窗口，所以共有205590中可能的test，在训练集上计算所有的test，根据test的平均值和0.5的距离从小到大排序（均值越接近0.5，说明变化越大，特征越具有判决力）， 构成向量T，把T中第一个test放入结果向量R中，并从T中移除，继续从T中取出test，计算该test和R中的test的相关性，如果大于门限值，则丢弃，否则放入R，重复这个过程最终得到256维的R，如果R中的test个数小于256，则提高相关性门限值重新尝试；
+但是Steered BRIEF的variance更低，所以使用以下方法选取test点的位置：选取关键点的31x31邻域作为patch，每一个test是5x5的子窗口，所以共有205590种可能的test，在训练集上计算所有的test，根据test的平均值和0.5的距离从小到大排序（均值越接近0.5，说明变化越大，特征越具有判决力）， 构成向量T，把T中第一个test放入结果向量R中，并从T中移除，继续从T中取出test，计算该test和R中的test的相关性，如果大于门限值，则丢弃，否则放入R，重复这个过程最终得到256维的R，如果R中的test个数小于256，则提高相关性门限值重新尝试；
 
 (3)二值特征匹配
 
@@ -454,7 +454,7 @@ TODO
 
 《Brisk: Binary robust invariant scalable keypoints》（2011）
 
-(1)	ScaleSpace Keypoint Detection
+(1)	Scale Space Keypoint Detection
 
 n个octaves c和n个intra-octaves d，通常n=4，原始图片对应c0，其余的c逐步地half-sampling，每个d(i)在c(i)和c(i+1)之间，d0是c0的1.5倍下采样。
 
@@ -493,6 +493,8 @@ I为光滑后的像素值。
 t为关键点的scale，估计关键点的方向为
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/172.png)
+
+所以BRISK是旋转不变的。
 
 (2.2) Building the Descriptor
 
@@ -544,3 +546,25 @@ I是感知域对P光滑后的像素值。使用类似ORB中的方法找到描述
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/179.png)
 
 M为G中对的个数。
+
+
+《LATCH: Learned Arrangements of Three Patch Codes》 (2015)
+
+普通的二值特征：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/199.png)
+ 
+W(p，σ)为窗口W中的点p经过高斯滤波平滑后的像素值，最终得到的特征向量为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/200.png)
+ 
+patch triplets的二值特征为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/201.png)
+ 
+P为kxk的patch。
+
+学习patch triplet arrangement：
+
+在训练数据中选出500000对image patches，一半是从不同角度观察到的同一物理场景的点，标记为“same”，另一半为不同场景的点，记为“not-same”。随机选取p(t)，p1，p2的坐标，生成56000个triplet arrangement，在所有patch pairs上算出每一个arrangement的二值特征，定义一个arrangement的quality为在“same”的pairs上得到同样二值的个数加上在“not-same”的pairs上得到不同二值的个数。按照quality从大到小排列，选取quality值最大、且和已选择的arrangements的correlation小于门限值(0.2)的arrangements。实际使用中，最终选取的arrangements不超过256个。
+

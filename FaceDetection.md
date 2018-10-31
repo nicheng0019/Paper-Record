@@ -47,7 +47,7 @@
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/203.png)
  
-D为channel的个数，即对同一层feature map的所有像素同时正则化。正则化会导致特征值取值变小，降低特征的判决力，所以对每一个channel再乘以一个scaling factor：
+d为channel的个数，相当于在同一个空间位置的所有通道间做归一化，可参见caffe里的LRN 。正则化会导致特征值取值变小，降低特征的判决力，所以对每一个channel再乘以一个scaling factor：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/204.png)
  

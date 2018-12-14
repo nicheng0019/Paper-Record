@@ -28,6 +28,14 @@ Treat gradient vectors as a set of (dx，dy) points with a center of mass define
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/107.png)
 
+E是点的邻域的x、y方向导数的加权和矩阵。
+
+当前点的方向导数是x、y方向导数乘以方向角度的cos、sin值。
+
+判断flat、edge、corner，即判断所有方向导数中，幅度的最大值和最小值，而E的特征值恰好对应这个最大值和最小值。
+
+PCA即近似变化率最大的方向，在这里变化最大即导数幅度最大。
+
 Harris Detector对旋转变换不变，但对scale变换改变。
 
 
@@ -152,10 +160,15 @@ TODO
 
 The DoG detector detects mainly blobs, whereas the Harris detector responds to corners and highly textured points, hence these detectors extract complementary features in images.
 
+不同的detectors的比较：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/222.png)
+
+Harris-Laplace：同一个scale上使用Harris，不同的scale-space之间使用Laplace（《Indexing based on scale invariant interest points》）；
+
 TODO
 
-
-《Distinctive Image Features from Scale-Invariant Keypoints》（SIFT， 2004）
+《Object Recognition from Local Scale-Invariant Features》 (1999), 《Distinctive Image Features from Scale-Invariant Keypoints》（2004），（SIFT） 
 
 (1)Point Detector
 
@@ -215,6 +228,8 @@ Hessian matrix的特征值和主曲率成比例，
 
 类似于(3)，选择keypoint最近的scale space Gaussian模糊图像，采样梯度的大小和方向。描述子的坐标和梯度方向要相对(3)中计算出的keypoint方向旋转，使用描述子窗口宽度1.5倍标准差的Gaussian权重函数作为采样点梯度大小的权重。在4x4区域里计算梯度直方图，直方图的方向分成8个bin，共计算4x4个区域，所以描述子的维度为4x4x8=128。在计算每个采样点的梯度方向对bin的分配时，要使用trilinear，除了空间上的bilinear，还有bin上的linear：每一个梯度会分配到梯度方向和bin中心方向值最近的两个bins，分配值大小为梯度大小乘以(1-d)，d为梯度方向和bin中心方向在bin空间单位化后的距离。得到的描述子向量先归一化为单位向量，对于大于0.2的分量限制为0.2，再归一化为单位向量；
 
+（1999)中除了在当前的scale里计算4x4x8维特征向量之外，还在更高一个octave的scale里的2x2邻域里按同样方式计算8个bins，所以总的特征向量为160维。
+
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/136.png)
 
 (5)关键点匹配
@@ -244,21 +259,52 @@ Hessian矩阵的定义为：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/139.png)
 
+第一个octave：
+
+第一层：9x9 box filter，对应σ=1.2，
+ 
+第二层：15x15 box filter，对应σ=1.2x15/9，
+ 
+第三层：21x21 box filter，……
+ 
+第四层：27x27 box filter，……
+ 
+……
+
+第二个octave：
+
+第一层：18x18 box filter，对应σ=1.2x18/9，
+
+第二层：30x30 box filter，对应σ=1.2x30/9，
+	
+第三层：42x42 box filter，……
+	
+第四层：54x54 box filter，……
+	
+……
+
+第三个octave：
+	
+第一层：36x36 box filter，对应σ=1.2x36/9，
+	
+……
+
+
 在图片空间和Scale空间的3*3*3邻域里寻找Hessian矩阵行列式的最大值，使用SIFT中类似的方法插值出sub-pixel、sub-scale的Hessian矩阵行列式的最大值；
 
 (2)描述子
 
 （2.1）方向判决
 
-在关键点半径为6s的圆形邻域里，计算Haar-wavelet响应，s为keypoint被检测到的scale，采样的步骤和Haar-wavelet响应的计算也在当前scale进行，使用积分图代替wavelet， wavelet的边长为4s.得到wavelet响应后，用以关键点为中心，标准差为2.5s的Gaussian核加权.以覆盖π/3的角度滑动窗口，计算窗口内的x、y方向wavelet响应的和为新的向量，最长向量的方向为关键点的方向；
+在关键点半径为6s的圆形邻域里，计算Haar-wavelet响应，s为keypoint被检测到的scale，采样的步长为s，使用积分图代替wavelet， wavelet的边长为4s。得到wavelet响应后，用以关键点为中心，标准差为2.5s的Gaussian核加权。以覆盖π/3的角度滑动窗口，计算窗口内的x、y方向wavelet响应的和为新的向量，最长向量的方向为关键点的方向；
 
 (2.2)描述子组成
 
-选取兴趣点20sx20s的正方形邻域，方向为(2.1)确定的方向，分成4x4的子区域，对于每个子区域，在5x5的均匀的空间采样点上计算水平方向和垂直方向的Haar wavelet，
+选取兴趣点20sx20s的正方形邻域，方向为(2.1)确定的方向，分成4x4的子区域，对于每个子区域，以s为步长采样，得到在5x5的均匀的采样点，计算相对于主方向的水平方向和垂直方向的Haar wavelet，
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/163.png)
 
-filter size是2s，the responses乘以以兴趣点为中心的、标准差为3.3s的Gaussian权重。在每个子区域里计算wavelet response的和，每个子区域的描述子为
+Haar wavelet区域边长为2s，the responses乘以以兴趣点为中心的、标准差为3.3s的Gaussian权重。在每个子区域里计算wavelet response的和，每个子区域的描述子为
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/164.png)
 

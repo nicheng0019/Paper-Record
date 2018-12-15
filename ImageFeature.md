@@ -28,9 +28,9 @@ Treat gradient vectors as a set of (dx，dy) points with a center of mass define
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/107.png)
 
-E是点的邻域的x、y方向导数的加权和矩阵。
+E是点的邻域的梯度的加权和矩阵。
 
-当前点的方向导数是x、y方向导数乘以方向角度的cos、sin值。
+当前点的方向导数是梯度乘以方向角度的cos、sin值。
 
 判断flat、edge、corner，即判断所有方向导数中，幅度的最大值和最小值，而E的特征值恰好对应这个最大值和最小值。
 

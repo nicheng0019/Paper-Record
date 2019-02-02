@@ -59,6 +59,8 @@ i、j、k、l遍历x1、x2两个维度，
 
 《Matching Images with Different Resolutions》（2002）
 
+在两张图片的scale变换已知的情况下,使用调整的Harris检测子得到两张图片对应的关键点。
+
 (1)
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/111.png)
@@ -126,6 +128,7 @@ Local Jet：
 
 
 《An affine invariant interest point detector》 (2002)
+
 It is based on three key ideas: 1) The second moment matrix computed in a point can be used to normalize a region in an affine invariant way (skew and stretch). 2) The scale of the local structure is indicated by local extrema of normalized derivatives over scale. 3) An affine-adapted Harris detector determines the location of interest points.
 
 (1) Affine Gaussian scale-space
@@ -226,7 +229,7 @@ Hessian matrix的特征值和主曲率成比例，
 
 (4)局部图像描述子
 
-类似于(3)，选择keypoint最近的scale space Gaussian模糊图像，采样梯度的大小和方向。描述子的坐标和梯度方向要相对(3)中计算出的keypoint方向旋转，使用描述子窗口宽度1.5倍标准差的Gaussian权重函数作为采样点梯度大小的权重。在4x4区域里计算梯度直方图，直方图的方向分成8个bin，共计算4x4个区域，所以描述子的维度为4x4x8=128。在计算每个采样点的梯度方向对bin的分配时，要使用trilinear，除了空间上的bilinear，还有bin上的linear：每一个梯度会分配到梯度方向和bin中心方向值最近的两个bins，分配值大小为梯度大小乘以(1-d)，d为梯度方向和bin中心方向在bin空间单位化后的距离。得到的描述子向量先归一化为单位向量，对于大于0.2的分量限制为0.2，再归一化为单位向量；
+类似于(3)，选择keypoint最近的scale space Gaussian模糊图像，采样梯度的大小和方向。描述子的坐标和梯度方向要相对(3)中计算出的keypoint方向旋转，使用描述子窗口宽度1.5倍标准差的Gaussian权重函数作为采样点梯度大小的权重。在4x4区域里计算梯度直方图，直方图的方向分成8个bin，共计算4x4个区域，所以描述子的维度为4x4x8=128，总的邻域大小为16x16，因为是用相邻两个像素算的是x、y方向的梯度，所以相当于是在关键点的17x17的邻域。在计算每个采样点的梯度方向对bin的分配时，要使用trilinear，除了空间上的bilinear，还有bin上的linear：每一个梯度会分配到梯度方向和bin中心方向值最近的两个bins，分配值大小为梯度大小乘以(1-d)，d为梯度方向和bin中心方向在bin空间单位化后的距离。得到的描述子向量先归一化为单位向量，对于大于0.2的分量限制为0.2，再归一化为单位向量；
 
 （1999)中除了在当前的scale里计算4x4x8维特征向量之外，还在更高一个octave的scale里的2x2邻域里按同样方式计算8个bins，所以总的特征向量为160维。
 
@@ -240,6 +243,39 @@ Hessian matrix的特征值和主曲率成比例，
 《Shape indexing using approximate nearest-neighbour search in highdimensional spaces》
 
 TODO
+
+《A performance evaluation of local descriptors》（2005）
+
+A. Support regions
+
+1）Region detectors
+
+Harris points：旋转不变；
+
+Harris-Laplace regions：旋转和scale不变，检测corner-like结构；
+
+Hessian-Laplace regions：旋转和scale不变，检测blob-like结构，DoG对edge也会有相应；
+
+Harris-Affine regions：仿射不变；
+
+Hessian-Affine regions：仿射不变。
+
+B. Descriptors
+
+SIFT descriptors：见《Object Recognition from Local Scale-Invariant Features》；
+
+Gradient location-orientation histogram (GLOH)：使用极坐标，在半径方向上分为3个bins，在角度方向上分为8个bins，共17个bins。梯度方向分为16个bins，共272个bins，使用PCA得到128维的特征；
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/223.png)
+
+Shape context：
+
+TODO
+
+《Multi-Image Matching using Multi-Scale Oriented Patches》
+
+
+
 
 《SURF: Speeded Up Robust Features》（2006）
 
@@ -296,7 +332,7 @@ Hessian矩阵的定义为：
 
 （2.1）方向判决
 
-在关键点半径为6s的圆形邻域里，计算Haar-wavelet响应，s为keypoint被检测到的scale，采样的步长为s，使用积分图代替wavelet， wavelet的边长为4s。得到wavelet响应后，用以关键点为中心，标准差为2.5s的Gaussian核加权。以覆盖π/3的角度滑动窗口，计算窗口内的x、y方向wavelet响应的和为新的向量，最长向量的方向为关键点的方向；
+在关键点半径为6s的圆形邻域里，计算Haar-wavelet响应，s为keypoint被检测到的scale，采样的步长为s，使用积分图代替wavelet， wavelet的边长为4s。得到wavelet响应后，用以关键点为中心，标准差为2.5s（2.5s的意思是标准差为2.5的Gaussian权重，以s为间隔采样的像素值与权重相乘）的Gaussian核加权。以覆盖π/3的角度滑动窗口，计算窗口内的x、y方向wavelet响应的和为新的向量，最长向量的方向为关键点的方向；
 
 (2.2)描述子组成
 
@@ -304,7 +340,7 @@ Hessian矩阵的定义为：
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/163.png)
 
-Haar wavelet区域边长为2s，the responses乘以以兴趣点为中心的、标准差为3.3s的Gaussian权重。在每个子区域里计算wavelet response的和，每个子区域的描述子为
+Haar wavelet区域边长为2s，the responses乘以以兴趣点为中心的、标准差为3.3s（与2.5s的意思相同）的Gaussian权重。在每个子区域里计算wavelet response的和，每个子区域的描述子为
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/164.png)
 
@@ -492,7 +528,7 @@ TODO
 
 
 
-《DAISY: An Efficient Dense Descriptor Applied to Wide-Baseline Stereo》（2010）
+《DAISY: An Efficient Dense Descriptor Applied to Wide-Baseline Stereo》（《A Fast Local Descriptor for Dense Matching》）（2010）
 
 TODO
 

@@ -65,6 +65,46 @@ multinomial model的计算：P(c)是class c的documents中word出现的次数除
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/189.png)
 
 
+《Unsupervised Learning by Probabilistic Latent Semantic Analysis》 （《Probabilistic latent semantic indexing》）
+
+(1) The Aspect Model
+
+假设
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/230.png)
+
+则联合概率模型为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/231.png)
+
+似然函数为：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/232.png)
+
+改变D和Z的箭头方向的一个等价表示：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/233.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/234.png)
+
+(2) Model fitting with the EM algorithm
+
+E-step：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/235.png)
+
+M-step：
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/236.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/237.png)
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/238.png)
+
+n(d)是document d的长度，即d中所有words的个数。
+
+
+
 《Latent Dirichlet Allocation》
 
 《Text Classification from Labeled and Unlabeled Documents using EM》中的模型为：

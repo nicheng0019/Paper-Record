@@ -274,7 +274,9 @@ TODO
 
 《Multi-Image Matching using Multi-Scale Oriented Patches》
 
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/224.png)
 
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/225.png)
 
 
 《SURF: Speeded Up Robust Features》（2006）

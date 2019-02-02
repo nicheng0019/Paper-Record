@@ -2,11 +2,11 @@
 
 (1)Detection and description of image patches
 
-使用Harris affine detector检测关键点，确定关键点的椭圆(仿射)邻域，把仿射邻域映射到圆形区域，在区域上提取SIFT特征作为描述子；
+使用Harris affine detector检测关键点，确定关键点的椭圆（仿射）邻域，把仿射邻域映射到圆形区域，在区域上提取SIFT特征作为描述子；
 
 (2)Assigning patch descriptors to a set of predetermined clusters (a vocabulary) with a vector quantization algorithm
 
-使用k-means方法得到vocabulary， k的值和聚类中心的初始值经过多次尝试，选择经验风险(empirical risk)最小的值；
+使用k-means方法得到vocabulary， k的值和聚类中心的初始值经过多次尝试，选择经验风险（empirical risk）最小的值；
 
 (3)Constructing a bag of keypoints, which counts the number of patches assigned to each cluster
 

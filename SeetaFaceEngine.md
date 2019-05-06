@@ -24,7 +24,13 @@ Locally Assembled Binary (LAB) Haar feature相当于二值化的HAAR特征,跟LB
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/53.png)
 
-Feature-centric cascade: 对于一个窗口提取到的多维特征，不是一次全部输入到一个分类器里，而是分stage逐步增加特征的维度，直到最后一个stage才是整个维度的特征,以此来减少计算量。
+一个LAB特征可以用一个4元组l(x,y,w,h)标记，当前区域和相邻的8个区域比较大小，如Figure5，取值范围为[0,255]，论文里使用3x3的区域。
+
+检测的时候，先计算整个图片的LAB特征，再用每个窗口的LAB特征做分类。分类器使用RealBoost，
+
+![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/239.png)
+
+T是使用的LAB特征总数，l(i)是某一个LAB特征，h对每一个LAB特征值返回一个置信度，并包含一个门限值。为了提高检测效率，把T个l分成若干stages，每个stage结束使用门限值判断是否为人脸，如果不是，则不需要之后的判断。
 
 ![image](https://github.com/nicheng0019/Paper-Record/blob/master/image/54.png)
 
